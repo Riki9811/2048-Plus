@@ -25,15 +25,15 @@ class GameManager {
 	#scoreCounter;
 	#score;
 	#grid;
-    #boundHandleInput;
+	#boundHandleInput;
 
 	constructor(scoreCounter, gameBoard) {
 		this.#score = 0;
 		this.#scoreCounter = scoreCounter;
-        this.#boundHandleInput = this.#handleInput.bind(this);
+		this.#boundHandleInput = this.#handleInput.bind(this);
 		this.#grid = new Grid(gameBoard);
-        this.#grid.addTile();
-        this.#grid.addTile();
+		this.#grid.addTile();
+		this.#grid.addTile();
 	}
 
 	get score() {
@@ -49,9 +49,9 @@ class GameManager {
 		window.addEventListener("keydown", this.#boundHandleInput, { once: true });
 	}
 
-    stopInput() {
-        window.removeEventListener("keydown", this.#boundHandleInput);
-    }
+	stopInput() {
+		window.removeEventListener("keydown", this.#boundHandleInput);
+	}
 
 	async #handleInput(e) {
 		switch (e.key) {
