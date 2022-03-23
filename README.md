@@ -30,6 +30,7 @@
     <li>
       <a href="#about-the-project">About The Project</a>
     </li>
+    <li><a href="#how-to-play">How To Play</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
@@ -43,6 +44,18 @@
 [![2048 Screen Shot][product-screenshot]](https://example.com)
 
 This project is a clone of the original 2048 game. Written in plain Javascript. The game will have some extra features like custom game-board dimensions, saving scores and statistics in localStorage and some additional graphical settings like dark/light mode.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- HOW TO PLAY -->
+
+## How To Play
+
+For everyone living under a rock, this is how to play tha game:
+
+The aim of the game is to combine tiles with the same value.
+Pressing the arrow keys (or swiping on mobile) will move all tiles in the direction of the key pressed/swipe. After all the tiles are done moving a new tile with a value of 2 or 4 will be created in a random empty cell. Two tiles with the same number will merge when they collide to create a single tile with double the value.
+The game is over when there are no valid ways for you to move the tiles.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
