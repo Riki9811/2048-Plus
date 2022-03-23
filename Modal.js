@@ -1,4 +1,6 @@
-import { waitForAnimation } from "./utils/animation.js";
+import Grid from "./Grid.js";
+import { waitForAnimation, animateElement } from "./utils/animation.js";
+import wait from "./utils/wait.js";
 
 export default class Modal {
 	constructor(modalContainerTemplate, { onClose = () => {}, onOpen = () => {} } = {}) {
@@ -47,6 +49,44 @@ export default class Modal {
 	}
 }
 
-export function setupExampleGrid() {
+export async function setupInfoModal(modal) {
+	const pressKey = (direction) => {
+		arrowKeys.dataset.key = direction;
+		animateElement(arrowKeys, "press");
+		switch (direction) {
+			case "left":
+				return instructionGrid.moveLeft(false);
+			case "right":
+				return instructionGrid.moveRight(false);
+			case "up":
+				return instructionGrid.moveUp(false);
+			case "down":
+				return instructionGrid.moveDown(false);
+		}
+	};
 
+	const performAction = async (x, y, value, direction) => {
+		await pressKey(direction);
+		instructionGrid.addTileInPosition(x, y, value);
+		await wait();
+	};
+
+	const instructionBoard = modal.querySelector("#info-board");
+	const arrowKeys = modal.querySelector("[data-arrow-keys]");
+	const instructionGrid = new Grid(instructionBoard, 3, 3, { cellSize: 7, cellGap: 1 });
+
+	delete arrowKeys.dataset.key;
+	arrowKeys.classList.remove("press");
+	instructionGrid.addTileInPosition(1, 1, 2);
+	await wait();
+	await performAction(2, 0, 2, "left");
+	await performAction(1, 0, 2, "down");
+	await performAction(0, 1, 4, "right");
+	await performAction(0, 0, 4, "down");
+	await performAction(0, 1, 2, "right");
+	await performAction(1, 2, 2, "right");
+	await performAction(0, 0, 4, "down");
+	await performAction(1, 0, 2, "down");
+	await wait();
+	setupInfoModal(modal);
 }

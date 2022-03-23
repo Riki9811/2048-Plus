@@ -65,11 +65,11 @@ The game is over when there are no valid ways for you to move the tiles.
 
 -   [x] Main game functionallity
 -   [x] UI elements
--   [ ] Info menu on how to play
+-   [x] Info menu on how to play
+-   [ ] Dark/light mode toggling
 -   [ ] Saving statistics in local storage
 -   [ ] Statistics menu
 -   [ ] Swipe controls for mobile
--   [ ] Settings menu
 
 See the [open issues](https://github.com/Riki9811/2048/issues) for a full list of proposed features (and known issues).
 

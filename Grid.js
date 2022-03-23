@@ -3,24 +3,25 @@ import Tile from "./Tile.js";
 
 const DEFAULT_W = 4;
 const DEFAULT_H = 4;
-// const DEFAULT_CELL_SIZE = 70 / Math.max(DEFAULT_W, DEFAULT_H);
-// const DEFAULT_CELL_GAP = DEFAULT_CELL_SIZE / 10;
+const DEFAULT_CELL_SIZE = 70 / Math.max(DEFAULT_W, DEFAULT_H);
+const DEFAULT_CELL_GAP = DEFAULT_CELL_SIZE / 10;
 
 export default class Grid {
-    #gridElement;
+	#gridElement;
 	#cells;
 	#w;
 	#h;
 	#cellSize;
 	#cellGap;
 
-	constructor(gridElemet, w = DEFAULT_W, h = DEFAULT_H) {
+	constructor(gridElemet, w = DEFAULT_W, h = DEFAULT_H, { cellSize = DEFAULT_CELL_SIZE, cellGap = DEFAULT_CELL_GAP } = {}) {
 		this.#w = w;
 		this.#h = h;
-		this.#cellSize = 70 / Math.max(w, h);
-		this.#cellGap = this.#cellSize / 10;
-        this.#gridElement = gridElemet;
+		this.#cellSize = cellSize;
+		this.#cellGap = cellGap;
+		this.#gridElement = gridElemet;
 
+        gridElemet.innerHTML = "";
 		gridElemet.style.setProperty("--grid-w", this.#w);
 		gridElemet.style.setProperty("--grid-h", this.#h);
 		gridElemet.style.setProperty("--cell-size", `${this.#cellSize}vmin`);
@@ -59,24 +60,24 @@ export default class Grid {
 		return this.#emptyCells[randIndex];
 	}
 
-	async moveUp() {
+	async moveUp(addTile = true) {
 		await this.#slideTiles(this.cellsByColumns);
-        this.#finalizeMove();
+		this.#finalizeMove(addTile);
 	}
 
-	async moveDown() {
+	async moveDown(addTile = true) {
 		await this.#slideTiles(this.cellsByColumns.map((column) => [...column].reverse()));
-        this.#finalizeMove();
+		this.#finalizeMove(addTile);
 	}
 
-	async moveLeft() {
+	async moveLeft(addTile = true) {
 		await this.#slideTiles(this.cellsByRows);
-        this.#finalizeMove();
+		this.#finalizeMove(addTile);
 	}
 
-	async moveRight() {
+	async moveRight(addTile = true) {
 		await this.#slideTiles(this.cellsByRows.map((row) => [...row].reverse()));
-        this.#finalizeMove();
+		this.#finalizeMove(addTile);
 	}
 
 	async #slideTiles(cells) {
@@ -146,16 +147,17 @@ export default class Grid {
 		return undefined;
 	}
 
-    #finalizeMove() {
-        this.#cells.forEach((cell) => cell.doMerge());
-		const newTile = this.addTile();
+	#finalizeMove(addTile) {
+		this.#cells.forEach((cell) => cell.doMerge());
+		if (addTile) {
+			const newTile = this.addTile();
 
-		if (!this.canMoveUp() && !this.canMoveDown() && !this.canMoveLeft() && !this.canMoveRight()) {
-			newTile.waitForTransition().then(() => alert("You lose"));
-			return;
+			if (!this.canMoveUp() && !this.canMoveDown() && !this.canMoveLeft() && !this.canMoveRight()) {
+				newTile.waitForTransition().then(() => alert("You lose"));
+				return;
+			}
 		}
-
-    }
+	}
 }
 
 function createCellElements(gridElement, w, h) {

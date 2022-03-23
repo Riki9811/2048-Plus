@@ -84,9 +84,9 @@ footer {
 }
 
 button {
-    border-radius: 0.2em;
-    background: none;
-    color: var(--text);
+	border-radius: 0.2em;
+	background: none;
+	color: var(--text);
 }
 
 button:focus-visible {
@@ -158,8 +158,24 @@ button:focus-visible {
 	border-radius: 999em;
 }
 
+.modal-backdrop {
+	position: absolute;
+	background: rgba(0, 0, 0, 0.5);
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	transition: opacity 250ms ease-in-out, transform 250ms ease-in-out;
+}
+
+.modal-backdrop.show {
+	opacity: 1;
+}
+
 .modal {
-    position: relative;
+	position: relative;
 	background: var(--bg-main);
 	color: var(--text-dark);
 	border: 2px solid var(--border-color);
@@ -167,70 +183,90 @@ button:focus-visible {
 	padding: 2rem;
 	font-size: 1.2rem;
 	max-width: 90vmin;
+	/* transform: translateY(1vmin); */
+	transition: transform 25ms ease-in-out;
+}
+
+.modal-backdrop.show > .modal {
+	transform: translateY(0);
 }
 
 .modal-close-btn {
-    background: none;
-    border: none;
-    color: inherit;
-    font-size: 3em;
-    height: .6em;
-    line-height: 0em;
-    position: absolute;
-    top: 2rem;
-    right: 2rem;
-    cursor: pointer;
-    color: var(--text);
+	background: none;
+	border: none;
+	color: inherit;
+	font-size: 3em;
+	height: 0.6em;
+	line-height: 0em;
+	position: absolute;
+	top: 2rem;
+	right: 2rem;
+	cursor: pointer;
+	color: var(--text);
 }
 
 .modal-title {
-    text-align: center;
-    color: var(--text);
-    margin-bottom: 1em;
+	text-align: center;
+	color: var(--text);
+	margin-bottom: 1em;
 }
 
 .modal-body > .modal-section:not(:last-child) {
-    margin-bottom: 1em;
-    border-bottom: 2px solid var(--border-color);
+	margin-bottom: 1em;
+	border-bottom: 2px solid var(--border-color);
 }
 
 .modal-section > p {
-    margin-bottom: 1em;
-}
-
-.modal-backdrop {
-	position: absolute;
-	background: rgba(0, 0, 0, 0.5);
-	display: none;
-	width: 100vw;
-	height: 100vh;
-	align-items: center;
-	justify-content: center;
-}
-
-.show {
-	display: flex;
+	margin-bottom: 1em;
 }
 
 .arrow-keys {
-    width: max(35vmin,125px);
-    stroke: var(--text-dark);
-    stroke-width: max(0.25vmin,3px);
-    fill: none;
+	width: max(25vmin, 125px);
+	stroke: var(--text-dark);
+	stroke-width: max(0.25vmin, 3px);
+	fill: none;
 }
 
-.arrow-keys[data-key=left] .arrow-left {
-    fill: var(--text-dark);
+.arrow-keys * {
+	transition: transform 100ms ease-in-out;
+	transform-origin: bottom center;
 }
 
-.arrow-keys[data-key=right] .arrow-right {
-    fill: var(--text-dark);
+.arrow-keys[data-key="left"] .arrow-left,
+.arrow-keys[data-key="right"] .arrow-right,
+.arrow-keys[data-key="up"] .arrow-up,
+.arrow-keys[data-key="down"] .arrow-down {
+	fill: var(--text-dark);
+	stroke: none;
 }
 
-.arrow-keys[data-key=up] .arrow-up {
-    fill: var(--text-dark);
+.arrow-keys[data-key="left"][data-animation="press"] .arrow-left {
+	transform: scale(0.9) translate(1%, 8%);
+}
+.arrow-keys[data-key="right"][data-animation="press"] .arrow-right {
+	transform: scale(0.9) translate(9%, 8%);
+}
+.arrow-keys[data-key="up"][data-animation="press"] .arrow-up {
+	transform: scale(0.9) translate(5%, 0%);
 }
 
-.arrow-keys[data-key=down] .arrow-down {
-    fill: var(--text-dark);
+.arrow-keys[data-key="down"][data-animation="press"] .arrow-down {
+	transform: scale(0.9) translate(5%, 8%);
+}
+
+#example-section {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+#info-board {
+	user-select: none;
+	display: grid;
+	grid-template-columns: repeat(var(--grid-w), var(--cell-size));
+	grid-template-rows: repeat(var(--grid-h), var(--cell-size));
+	background: var(--bg-game-board);
+	gap: var(--cell-gap);
+	padding: var(--cell-gap);
+	border-radius: 2vmin;
+	position: relative;
 }
