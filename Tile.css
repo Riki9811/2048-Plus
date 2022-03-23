@@ -1,0 +1,214 @@
+:root {
+	--col-2: #eee4da;
+	--col-4: #eee1c9;
+	--col-8: #f3b27a;
+	--col-16: #f69664;
+	--col-32: #f77c5f;
+	--col-64: #f75f3b;
+	--col-128: #edd073;
+	--col-256: #edcc62;
+	--col-512: #edc950;
+	--col-1024: #edc53f;
+	--col-2048: #edc22e;
+	--col-4096: #f06688;
+	--col-8192: #ef4e76;
+	--col-16384: #f43e66;
+	--col-32768: #72b4d5;
+	--col-65536: #5d9edf;
+	--col-131072: #1982cc;
+	--col-262144: #ab72d5;
+	--col-524288: #9e5ddf;
+	--col-1048576: #7319cc;
+	--col-2097152: #464039;
+	--col-super: #26221c;
+	--outline-col-2097152: #46403955;
+	--outline-col-super: #edc22e88;
+	--tile-text-light: #f9f6f2;
+	--tile-text-dark: #776e65;
+	--tile-text-gold: #edc22e;
+}
+
+.tile {
+	position: absolute;
+	left: calc(var(--x) * (var(--cell-size) + var(--cell-gap)) + var(--cell-gap));
+	top: calc(var(--y) * (var(--cell-size) + var(--cell-gap)) + var(--cell-gap));
+	display: grid;
+	place-items: center;
+	width: var(--cell-size);
+	height: var(--cell-size);
+	border-radius: 1vmin;
+	font-weight: bold;
+	color: var(--tile-text-light);
+	animation: show 200ms ease-in-out;
+	transition: left 100ms ease-in-out, top 100ms ease-in-out;
+}
+
+.tile::before {
+	border-radius: 1vmin;
+}
+
+@keyframes show {
+	0% {
+		opacity: 0.2;
+		transform: scale(0);
+	}
+}
+
+/* NORMAL */
+
+.tile.tile-2 {
+	color: var(--tile-text-dark);
+	background: var(--col-2);
+}
+
+.tile.tile-4 {
+	color: var(--tile-text-dark);
+	background: var(--col-4);
+}
+
+.tile.tile-8 {
+	background: var(--col-8);
+}
+
+.tile.tile-16 {
+	background: var(--col-16);
+}
+
+.tile.tile-32 {
+	background: var(--col-32);
+}
+
+.tile.tile-64 {
+	background: var(--col-64);
+}
+
+.tile.tile-128 {
+	background: var(--col-128);
+	font-size: 75%;
+}
+
+.tile.tile-256 {
+	background: var(--col-256);
+	font-size: 75%;
+}
+
+.tile.tile-512 {
+	background: var(--col-512);
+	font-size: 75%;
+}
+
+.tile.tile-1024 {
+	background: var(--col-1024);
+	font-size: 65%;
+}
+
+.tile.tile-2048 {
+	background: var(--col-2048);
+	font-size: 65%;
+}
+
+/* PINK */
+
+.tile.tile-4096 {
+	background: var(--col-4096);
+	font-size: 65%;
+}
+
+.tile.tile-8192 {
+	background: var(--col-8192);
+	font-size: 65%;
+}
+
+.tile.tile-16384 {
+	background: var(--col-16384);
+	font-size: 55%;
+}
+
+/* BLUE */
+
+.tile.tile-32768 {
+	background: var(--col-32768);
+	font-size: 55%;
+}
+
+.tile.tile-65536 {
+	background: var(--col-65536);
+	font-size: 55%;
+}
+
+.tile.tile-131072 {
+	background: var(--col-131072);
+	font-size: 50%;
+}
+
+/* PURPLE */
+
+.tile.tile-262144 {
+	background: var(--col-262144);
+	font-size: 50%;
+}
+
+.tile.tile-524288 {
+	background: var(--col-524288);
+	font-size: 50%;
+}
+
+.tile.tile-1048576 {
+	background: var(--col-1048576);
+	font-size: 40%;
+}
+
+/* ULTRA */
+
+.tile.tile-2097152 {
+	background: var(--col-2097152);
+	font-size: 40%;
+}
+
+.tile.tile-2097152::before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	color: var(--outline-col-2097152);
+	animation: shadowBreathe 1s ease-in-out infinite;
+}
+
+.tile.tile-super {
+	color: var(--tile-text-gold);
+	background: var(--col-super);
+	font-size: 30%;
+}
+
+.tile.tile-super::before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	color: var(--outline-col-super);
+	animation: superShadowBreathe 1s ease-in-out infinite;
+}
+
+@keyframes shadowBreathe {
+	0% {
+		box-shadow: 0 0 0 0;
+	}
+	50% {
+		box-shadow: 0 0 0 0.5vmin;
+	}
+	100% {
+		box-shadow: 0 0 0 0;
+	}
+}
+
+@keyframes superShadowBreathe {
+	0% {
+		box-shadow: 0 0 0 0, inset 0 0 0.5vmin 0vmin;
+	}
+	50% {
+		box-shadow: 0 0 0 0.5vmin, inset 0 0 0.8vmin 0.8vmin;
+	}
+	100% {
+		box-shadow: 0 0 0 0, inset 0 0 0.5vmin 0vmin;
+	}
+}

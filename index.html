@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>2048</title>
+		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="Tile.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
+		<script src="script.js" type="module"></script>
+	</head>
+	<body class="darkmode">
+		<header>
+			<div class="menu menu-left">
+				<button id="menu-btn" class="icon-btn">
+					<svg width="27" height="27" viewBox="-1.8 -1 24 17" xmlns="http://www.w3.org/2000/svg">
+						<rect x="0.172974" width="20" height="3" rx="1.5"></rect>
+						<rect x="0.172974" y="7" width="20" height="3" rx="1.5"></rect>
+						<rect x="0.172974" y="14" width="20" height="3" rx="1.5"></rect>
+					</svg>
+				</button>
+				<button id="info-btn" class="icon-btn">
+					<svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -1 24 24" width="30">
+						<path
+							d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"
+						></path>
+					</svg>
+				</button>
+			</div>
+			<div class="title">2048</div>
+			<div class="menu menu-right">
+				<div class="score-container">
+					Score
+					<span id="score-counter">0</span>
+				</div>
+				<button id="stats-btn" class="icon-btn">
+					<svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -1 24 24" width="30">
+						<path
+							d="M16,11V3H8v6H2v12h20V11H16z M10,5h4v14h-4V5z M4,11h4v8H4V11z M20,19h-4v-6h4V19z"
+						></path>
+					</svg>
+				</button>
+				<button id="settings-btn" class="icon-btn">
+					<svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -1 24 24" width="30">
+						<path
+							d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"
+						></path>
+					</svg>
+				</button>
+			</div>
+		</header>
+		<main><div id="game-board"></div></main>
+		<template data-info-modal-template="">
+			<div class="modal" data-modal="" role="dialog">
+				<button class="modal-close-btn" data-modal-close="">×</button>
+				<h2 class="modal-title">How To Play</h2>
+				<div class="modal-body">
+					<div class="modal-section">
+						<p>
+							This is a recreation of the original 2048 game, the aim of the game is to combine tiles with
+							the same value.
+						</p>
+						<p>
+							Pressing the arrow keys will move all tiles in the direction of the key pressed. After all
+							the tiles are done moving a new tile with a value of 2 or 4 will be created in a random
+							empty cell.
+						</p>
+						<p>
+							Two tiles with the same number will merge when they collide to create a single tile with
+							double the value.
+						</p>
+						<p>The game is over when there are no valid ways for you to move the tiles.</p>
+					</div>
+					<div class="modal-section">
+						<svg
+							class="arrow-keys"
+							data-arrow-keys=""
+							xmlns="http://www.w3.org/2000/svg"
+							version="1.1"
+							viewBox="0 178 752 356"
+						>
+							<g>
+								<path
+									class="arrow-left"
+									d="m293.72 485.37h-99.562c-4.8242 0-8.7344-3.9102-8.7344-8.7344v-99.562c0-4.8242 3.9102-8.7344 8.7344-8.7344h99.562c4.8242 0 8.7344 3.9102 8.7344 8.7344v99.562c0 4.8242-3.9102 8.7344-8.7344 8.7344zm-90.828-17.469h82.094v-82.094h-82.094z"
+								></path>
+								<path
+									class="arrow-down"
+									d="m426.48 485.37h-99.562c-4.8242 0-8.7344-3.9102-8.7344-8.7344v-99.562c0-4.8242 3.9102-8.7344 8.7344-8.7344h99.562c4.8242 0 8.7344 3.9102 8.7344 8.7344v99.562c-0.003907 4.8242-3.9102 8.7344-8.7344 8.7344zm-90.832-17.469h82.094v-82.094h-82.094z"
+								></path>
+								<path
+									class="arrow-up"
+									d="m426.48 352.62h-99.562c-4.8242 0-8.7344-3.9102-8.7344-8.7344v-99.562c0-4.8242 3.9102-8.7344 8.7344-8.7344h99.562c4.8242 0 8.7344 3.9102 8.7344 8.7344v99.562c-0.003907 4.8242-3.9102 8.7344-8.7344 8.7344zm-90.832-17.469h82.094v-82.094h-82.094z"
+								></path>
+								<path
+									class="arrow-right"
+									d="m559.21 485.37h-99.562c-4.8242 0-8.7344-3.9102-8.7344-8.7344v-99.562c0-4.8242 3.9102-8.7344 8.7344-8.7344h99.562c4.8242 0 8.7344 3.9102 8.7344 8.7344v99.562c0 4.8242-3.9102 8.7344-8.7344 8.7344zm-90.828-17.469h82.094v-82.094h-82.094z"
+								></path>
+								<path
+									class="arrow-up"
+									d="m360.1 302.85c-2.2344 0-4.4688-0.85156-6.1719-2.5547-3.4141-3.4102-3.4141-8.9375-0.007812-12.352l16.586-16.602c1.6367-1.6406 3.8594-2.5625 6.1758-2.5625h0.003906c2.3164 0 4.5352 0.92188 6.1758 2.5586l16.582 16.582c3.4102 3.4102 3.4102 8.9414 0 12.352-3.4102 3.4102-8.9414 3.4102-12.352 0l-10.402-10.402-10.41 10.422c-1.7031 1.7031-3.9414 2.5586-6.1797 2.5586z"
+								></path>
+								<path
+									class="arrow-down"
+									d="m376.7 452.17c-2.2305 0-4.4609-0.85156-6.168-2.5508l-16.613-16.574c-3.4141-3.4062-3.4219-8.9336-0.015624-12.352 3.4062-3.4141 8.9336-3.4219 12.352-0.015624l10.445 10.418 10.426-10.414c3.4141-3.4102 8.9414-3.4062 12.352 0.007812 3.4062 3.4141 3.4062 8.9414-0.007812 12.352l-16.594 16.574c-1.7109 1.7031-3.9414 2.5547-6.1758 2.5547z"
+								></path>
+								<path
+									class="arrow-right"
+									d="m509.46 452.17c-2.2344 0-4.4688-0.85156-6.1758-2.5586-3.4102-3.4102-3.4102-8.9414 0-12.352l10.402-10.402-10.422-10.41c-3.4141-3.4102-3.4141-8.9375-0.007813-12.352 3.4102-3.4141 8.9375-3.4141 12.352-0.007812l16.602 16.586c1.6406 1.6367 2.5625 3.8594 2.5625 6.1758 0 2.3164-0.91797 4.5391-2.5586 6.1797l-16.582 16.582c-1.7031 1.7031-3.9375 2.5586-6.1719 2.5586z"
+								></path>
+								<path
+									class="arrow-left"
+									d="m243.94 452.17c-2.2344 0-4.4688-0.85156-6.1719-2.5547l-16.602-16.586c-1.6406-1.6367-2.5625-3.8594-2.5625-6.1758 0-2.3164 0.91797-4.5391 2.5586-6.1797l16.582-16.582c3.4102-3.4102 8.9414-3.4102 12.352 0s3.4102 8.9414 0 12.352l-10.402 10.402 10.422 10.41c3.4141 3.4102 3.4141 8.9375 0.007813 12.352-1.7109 1.707-3.9492 2.5625-6.1836 2.5625z"
+								></path>
+							</g>
+						</svg>
+					</div>
+				</div>
+			</div>
+		</template>
+		<footer>Developed by: Riccardo Mariotti</footer>
+	</body>
+</html>

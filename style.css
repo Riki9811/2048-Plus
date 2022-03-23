@@ -1,0 +1,236 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: Arial;
+}
+
+:root {
+	--color-tone-0: #000000;
+	--color-tone-1: #4f4740;
+	--color-tone-2: #796e63;
+	--color-tone-3: #8f7a66;
+	--color-tone-4: #a69382;
+	--color-tone-5: #bbada0;
+	--color-tone-6: #cbc0b3;
+	--color-tone-7: #f9f5f1;
+	--color-accent: rgb(36, 142, 241);
+
+	--text: var(--color-tone-1);
+	--text-dark: var(--color-tone-1);
+	--text-darker: var(--color-tone-2);
+	--bg-game-board: var(--color-tone-5);
+	--bg-cell: var(--color-tone-6);
+	--bg-main: var(--color-tone-7);
+	--border-color: var(--color-tone-3);
+}
+
+.darkmode {
+	--color-tone-0: #ffffff;
+	--color-tone-1: #d8d9d9;
+	--color-tone-2: #818283;
+	--color-tone-3: #565758;
+	--color-tone-4: #3a3a3c;
+	--color-tone-5: #272729;
+	--color-tone-6: #1a1a1b;
+	--color-tone-7: #121213;
+
+	--text: var(--color-tone-0);
+	--text-dark: var(--color-tone-1);
+	--text-darker: var(--color-tone-2);
+	--bg-game-board: var(--color-tone-6);
+	--bg-cell: var(--color-tone-5);
+	--bg-main: var(--color-tone-7);
+	--border-color: var(--color-tone-3);
+}
+
+body {
+	background: var(--bg-main);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100vw;
+	height: 100vh;
+	font-size: 8vmin;
+	color: var(--text);
+}
+
+header,
+footer {
+	position: fixed;
+	left: 0;
+	width: calc(100vw - 4vmin);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+header {
+	top: 0;
+	font-size: 2.5rem;
+	margin-inline: 2vmin;
+	border-bottom: 2px solid var(--border-color);
+	padding-block: 0.5vmin;
+}
+
+footer {
+	bottom: 0;
+	font-size: 1rem;
+	opacity: 0.5;
+	padding: 0 0 1em 1em;
+}
+
+button {
+    border-radius: 0.2em;
+    background: none;
+    color: var(--text);
+}
+
+button:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 1px var(--color-accent), 0 0 0 2px var(--color-tone-0);
+	fill: var(--color-accent);
+	color: var(--color-accent);
+}
+
+.menu {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	width: 25%;
+	column-gap: 1vmin;
+}
+
+.menu.menu-left {
+	justify-content: flex-start;
+}
+
+.menu.menu-right {
+	justify-content: flex-end;
+}
+
+.score-container {
+	font-size: 50%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	flex-direction: column;
+	width: auto;
+	height: 100%;
+	color: var(--text-darker);
+	font-weight: bolder;
+}
+
+#score-counter {
+	color: var(--text);
+}
+
+#game-board {
+	user-select: none;
+	display: grid;
+	grid-template-columns: repeat(var(--grid-w), var(--cell-size));
+	grid-template-rows: repeat(var(--grid-h), var(--cell-size));
+	background: var(--bg-game-board);
+	gap: var(--cell-gap);
+	padding: var(--cell-gap);
+	border-radius: 2vmin;
+	position: relative;
+}
+
+.cell {
+	background: var(--bg-cell);
+	border-radius: 1vmin;
+}
+
+.icon-btn {
+	border: none;
+	height: 100%;
+	fill: var(--text);
+	cursor: pointer;
+	background: var(--bg-main);
+}
+
+#info-btn.icon-btn,
+#settings-btn.icon-btn {
+	border-radius: 999em;
+}
+
+.modal {
+    position: relative;
+	background: var(--bg-main);
+	color: var(--text-dark);
+	border: 2px solid var(--border-color);
+	border-radius: 1rem;
+	padding: 2rem;
+	font-size: 1.2rem;
+	max-width: 90vmin;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 3em;
+    height: .6em;
+    line-height: 0em;
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    cursor: pointer;
+    color: var(--text);
+}
+
+.modal-title {
+    text-align: center;
+    color: var(--text);
+    margin-bottom: 1em;
+}
+
+.modal-body > .modal-section:not(:last-child) {
+    margin-bottom: 1em;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.modal-section > p {
+    margin-bottom: 1em;
+}
+
+.modal-backdrop {
+	position: absolute;
+	background: rgba(0, 0, 0, 0.5);
+	display: none;
+	width: 100vw;
+	height: 100vh;
+	align-items: center;
+	justify-content: center;
+}
+
+.show {
+	display: flex;
+}
+
+.arrow-keys {
+    width: max(35vmin,125px);
+    stroke: var(--text-dark);
+    stroke-width: max(0.25vmin,3px);
+    fill: none;
+}
+
+.arrow-keys[data-key=left] .arrow-left {
+    fill: var(--text-dark);
+}
+
+.arrow-keys[data-key=right] .arrow-right {
+    fill: var(--text-dark);
+}
+
+.arrow-keys[data-key=up] .arrow-up {
+    fill: var(--text-dark);
+}
+
+.arrow-keys[data-key=down] .arrow-down {
+    fill: var(--text-dark);
+}
