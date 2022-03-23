@@ -12,7 +12,7 @@ export default class Grid {
 	#w;
 	#h;
 	#cellSize;
-	#cellGap;
+    #cellGap;
 
 	constructor(gridElemet, w = DEFAULT_W, h = DEFAULT_H, { cellSize = DEFAULT_CELL_SIZE, cellGap = DEFAULT_CELL_GAP } = {}) {
 		this.#w = w;
@@ -21,14 +21,15 @@ export default class Grid {
 		this.#cellGap = cellGap;
 		this.#gridElement = gridElemet;
 
-        gridElemet.innerHTML = "";
+		gridElemet.innerHTML = "";
 		gridElemet.style.setProperty("--grid-w", this.#w);
 		gridElemet.style.setProperty("--grid-h", this.#h);
 		gridElemet.style.setProperty("--cell-size", `${this.#cellSize}vmin`);
 		gridElemet.style.setProperty("--cell-gap", `${this.#cellGap}vmin`);
 		this.#cells = createCellElements(gridElemet, w, h).map((cellElement, index) => {
 			return new Cell(cellElement, index % this.#w, Math.floor(index / this.#w));
-		});
+        });
+        this.boundSetTileTransitions = this.#setTileTransitions.bind(this);
 	}
 
 	get cells() {
@@ -158,6 +159,14 @@ export default class Grid {
 			}
 		}
 	}
+
+    #setTileTransitions(on = true) {
+        for (const cell of this.cells) {
+            if (!cell.tile) continue;
+            cell.tile.setTransition(on);
+        }
+    }
+
 }
 
 function createCellElements(gridElement, w, h) {

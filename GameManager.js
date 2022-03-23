@@ -25,13 +25,19 @@ class GameManager {
 	#scoreCounter;
 	#score;
 	#grid;
-	#boundHandleInput;
+    #boundHandleInput;
+    #resizeWidnowTimeout;
 
 	constructor(scoreCounter, gameBoard) {
 		this.#score = 0;
 		this.#scoreCounter = scoreCounter;
 		this.#boundHandleInput = this.#handleInput.bind(this);
-		this.#grid = new Grid(gameBoard);
+        this.#grid = new Grid(gameBoard);
+        window.addEventListener("resize", () => {
+            this.#grid.boundSetTileTransitions(false);
+            clearTimeout(this.#resizeWidnowTimeout)
+            this.#resizeWidnowTimeout = setTimeout(this.#grid.boundSetTileTransitions, 100);
+        })
 		this.#grid.addTile();
 		this.#grid.addTile();
 	}

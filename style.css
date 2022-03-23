@@ -70,10 +70,15 @@ footer {
 
 header {
 	top: 0;
-	font-size: 2.5rem;
+	font-size: 4vmin;
 	margin-inline: 2vmin;
 	border-bottom: 2px solid var(--border-color);
 	padding-block: 0.5vmin;
+}
+
+header svg {
+    height: 100%;
+    width: 100%;
 }
 
 footer {
@@ -147,7 +152,8 @@ button:focus-visible {
 
 .icon-btn {
 	border: none;
-	height: 100%;
+	width: 4vmin;
+	height: 4vmin;
 	fill: var(--text);
 	cursor: pointer;
 	background: var(--bg-main);
