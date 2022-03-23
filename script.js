@@ -28,3 +28,5 @@ const infoModal = new Modal(document.querySelector("[data-info-modal-template]")
 	},
 });
 infoBtn.addEventListener("click", () => infoModal.show());
+
+themeBtn.addEventListener("click", () => document.body.classList.toggle("darkmode"));

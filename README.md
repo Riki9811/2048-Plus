@@ -66,7 +66,7 @@ The game is over when there are no valid ways for you to move the tiles.
 -   [x] Main game functionallity
 -   [x] UI elements
 -   [x] Info menu on how to play
--   [ ] Dark/light mode toggling
+-   [x] Dark/light mode toggling
 -   [ ] Saving statistics in local storage
 -   [ ] Statistics menu
 -   [ ] Swipe controls for mobile
