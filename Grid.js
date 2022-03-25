@@ -1,24 +1,19 @@
 import Cell from "./Cell.js";
 import Tile from "./Tile.js";
 
-const DEFAULT_W = 4;
-const DEFAULT_H = 4;
-const DEFAULT_CELL_SIZE = 70 / Math.max(DEFAULT_W, DEFAULT_H);
-const DEFAULT_CELL_GAP = DEFAULT_CELL_SIZE / 10;
-
 export default class Grid {
 	#gridElement;
 	#cells;
 	#w;
 	#h;
 	#cellSize;
-    #cellGap;
+	#cellGap;
 
-	constructor(gridElemet, w = DEFAULT_W, h = DEFAULT_H, { cellSize = DEFAULT_CELL_SIZE, cellGap = DEFAULT_CELL_GAP } = {}) {
+	constructor(gridElemet, w, h, { cellSize, cellGap } = {}) {
 		this.#w = w;
 		this.#h = h;
-		this.#cellSize = cellSize;
-		this.#cellGap = cellGap;
+		this.#cellSize = cellSize ? cellSize : 70 / Math.max(w, h);
+		this.#cellGap = cellGap ? cellGap : this.#cellSize / 10;
 		this.#gridElement = gridElemet;
 
 		gridElemet.innerHTML = "";
@@ -28,8 +23,8 @@ export default class Grid {
 		gridElemet.style.setProperty("--cell-gap", `${this.#cellGap}vmin`);
 		this.#cells = createCellElements(gridElemet, w, h).map((cellElement, index) => {
 			return new Cell(cellElement, index % this.#w, Math.floor(index / this.#w));
-        });
-        this.boundSetTileTransitions = this.#setTileTransitions.bind(this);
+		});
+		this.boundSetTileTransitions = this.#setTileTransitions.bind(this);
 	}
 
 	get cells() {
@@ -160,13 +155,12 @@ export default class Grid {
 		}
 	}
 
-    #setTileTransitions(on = true) {
-        for (const cell of this.cells) {
-            if (!cell.tile) continue;
-            cell.tile.setTransition(on);
-        }
-    }
-
+	#setTileTransitions(on = true) {
+		for (const cell of this.cells) {
+			if (!cell.tile) continue;
+			cell.tile.setTransition(on);
+		}
+	}
 }
 
 function createCellElements(gridElement, w, h) {

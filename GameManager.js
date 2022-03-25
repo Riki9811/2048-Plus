@@ -1,12 +1,11 @@
 import Grid from "./Grid.js";
+import { storage } from "./script.js";
 
 var Singleton = (function () {
 	var instance;
 
 	function createInstance() {
-		const scoreCounter = document.getElementById("score-counter");
-		const gameBoard = document.getElementById("game-board");
-		return new GameManager(scoreCounter, gameBoard);
+		return new GameManager();
 	}
 
 	return {
@@ -25,19 +24,25 @@ class GameManager {
 	#scoreCounter;
 	#score;
 	#grid;
-    #boundHandleInput;
-    #resizeWidnowTimeout;
+	#boundHandleInput;
+	#resizeWidnowTimeout;
 
-	constructor(scoreCounter, gameBoard) {
+	constructor() {
 		this.#score = 0;
-		this.#scoreCounter = scoreCounter;
+		this.#scoreCounter = document.getElementById("score-counter");
 		this.#boundHandleInput = this.#handleInput.bind(this);
-        this.#grid = new Grid(gameBoard);
-        window.addEventListener("resize", () => {
-            this.#grid.boundSetTileTransitions(false);
-            clearTimeout(this.#resizeWidnowTimeout)
-            this.#resizeWidnowTimeout = setTimeout(this.#grid.boundSetTileTransitions, 100);
-        })
+		this.resetGrid();
+	}
+
+	resetGrid() {
+		const gameBoard = document.getElementById("game-board");
+		const size = storage.currentSize;
+		this.#grid = new Grid(gameBoard, size.w, size.h);
+		window.addEventListener("resize", () => {
+			this.#grid.boundSetTileTransitions(false);
+			clearTimeout(this.#resizeWidnowTimeout);
+			this.#resizeWidnowTimeout = setTimeout(this.#grid.boundSetTileTransitions, 100);
+		});
 		this.#grid.addTile();
 		this.#grid.addTile();
 	}
@@ -94,6 +99,7 @@ class GameManager {
 				return;
 		}
 
+		console.log("Move done?");
 		this.setupInput();
 	}
 }
