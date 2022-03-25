@@ -90,3 +90,11 @@ export async function setupInfoModal(modal) {
 	await wait();
 	setupInfoModal(modal);
 }
+
+export function disableButtons(btns) {
+    for (const btn of btns) btn.disabled = true;
+}
+
+export function enableButtons(btns) {
+	for (const btn of btns) btn.disabled = false;
+}

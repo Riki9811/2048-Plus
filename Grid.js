@@ -1,5 +1,7 @@
 import Cell from "./Cell.js";
 import Tile from "./Tile.js";
+import { storage } from "./script.js";
+import Singleton from "./GameManager.js";
 
 export default class Grid {
 	#gridElement;
@@ -8,6 +10,7 @@ export default class Grid {
 	#h;
 	#cellSize;
 	#cellGap;
+	#biggestTile;
 
 	constructor(gridElemet, w, h, { cellSize, cellGap } = {}) {
 		this.#w = w;
@@ -15,6 +18,7 @@ export default class Grid {
 		this.#cellSize = cellSize ? cellSize : 70 / Math.max(w, h);
 		this.#cellGap = cellGap ? cellGap : this.#cellSize / 10;
 		this.#gridElement = gridElemet;
+		this.#biggestTile = -1;
 
 		gridElemet.innerHTML = "";
 		gridElemet.style.setProperty("--grid-w", this.#w);
@@ -49,6 +53,16 @@ export default class Grid {
 
 	get #emptyCells() {
 		return this.#cells.filter((cell) => cell.tile === null || cell.tile === undefined);
+	}
+
+	get biggestTileValue() {
+		return this.#biggestTile;
+	}
+
+	checkBiggestTileValue(value) {
+		if (this.#biggestTile < value) {
+			this.#biggestTile = value;
+		}
 	}
 
 	randomEmptyCell() {
@@ -130,6 +144,7 @@ export default class Grid {
 	addTile(val) {
 		const newTile = new Tile(this.#gridElement, val);
 		this.randomEmptyCell().tile = newTile;
+		this.checkBiggestTileValue(val);
 		return newTile;
 	}
 
@@ -138,6 +153,7 @@ export default class Grid {
 		if (this.#cells[index].tile == null) {
 			const newTile = new Tile(this.#gridElement, val);
 			this.#cells[index].tile = newTile;
+			this.checkBiggestTileValue(val);
 			return newTile;
 		}
 		return undefined;
@@ -145,14 +161,19 @@ export default class Grid {
 
 	#finalizeMove(addTile) {
 		this.#cells.forEach((cell) => cell.doMerge());
+		this.#cells.forEach((cell) => {
+			if (cell.tile != null) this.checkBiggestTileValue(cell.tile.value);
+		});
+
 		if (addTile) {
 			const newTile = this.addTile();
 
 			if (!this.canMoveUp() && !this.canMoveDown() && !this.canMoveLeft() && !this.canMoveRight()) {
 				newTile.waitForTransition().then(() => alert("You lose"));
-				return;
 			}
 		}
+
+		storage.registerStats(Singleton.instance().score, this.#biggestTile);
 	}
 
 	#setTileTransitions(on = true) {

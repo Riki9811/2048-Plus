@@ -31,12 +31,11 @@ class GameManager {
 		this.#score = 0;
 		this.#scoreCounter = document.getElementById("score-counter");
 		this.#boundHandleInput = this.#handleInput.bind(this);
-		this.resetGrid();
+		this.resetGrid(storage.currentSize);
 	}
 
-	resetGrid() {
+	resetGrid(size) {
 		const gameBoard = document.getElementById("game-board");
-		const size = storage.currentSize;
 		this.#grid = new Grid(gameBoard, size.w, size.h);
 		window.addEventListener("resize", () => {
 			this.#grid.boundSetTileTransitions(false);
@@ -99,7 +98,6 @@ class GameManager {
 				return;
 		}
 
-		console.log("Move done?");
 		this.setupInput();
-	}
+    }
 }
