@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="530" viewBox="0 0 19 19" width="530">
+    <rect x="0" y="0" width="100%" height="100%" rx="15%" fill="#1A1A1B" />
+
+    <style type="text/css">
+        text {
+            font-family: Arial;
+            font-size: 6px;
+            font-weight: bold;
+            fill: #776E65;
+        }
+
+        text.light {
+            fill: #F9F6F2;
+        }
+        
+        .col0 {
+            fill: #F69664;
+        }
+
+        .col2 {
+            fill: #EEE4DA;
+        }
+
+        .col4 {
+            fill: #EEE1C9;
+        }
+
+        .col8 {
+            fill: #F3B27A;
+        }
+    </style>
+
+    <rect x="1.2" y="1.2" width="8" height="8" rx="2" class="col2" />
+    <text x="5" y="5.7" dominant-baseline="middle" text-anchor="middle">2</text>
+    <rect x="9.8" y="1.2" width="8" height="8" rx="2" class="col0" />
+    <text x="13.7" y="5.7" dominant-baseline="middle" text-anchor="middle" class="light">0</text>
+
+    <rect x="1.2" y="9.8" width="8" height="8" rx="2" class="col4" />
+    <text x="5" y="14.4" dominant-baseline="middle" text-anchor="middle">4</text>
+    <rect x="9.8" y="9.8" width="8" height="8" rx="2" class="col8" />
+    <text x="13.7" y="14.4" dominant-baseline="middle" text-anchor="middle" class="light">8</text>
+</svg>
