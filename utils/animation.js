@@ -7,13 +7,14 @@ export function animateElement(element, animation) {
 	});
 }
 
-export function waitForAnimation(element) {
+export function waitForAnimation(element, listenChildren = true) {
 	return new Promise((resolve) => {
-		const resetAnimation = () => {
-			element.removeEventListener("transitionend", resetAnimation);
-			element.removeEventListener("transitioncancel", resetAnimation);
-			element.removeEventListener("animationend", resetAnimation);
-			element.removeEventListener("animationcancel", resetAnimation);
+		const resetAnimation = (evt) => {
+            if (!listenChildren && evt.target !== element) return;
+            element.removeEventListener("transitionend", resetAnimation);
+            element.removeEventListener("transitioncancel", resetAnimation);
+            element.removeEventListener("animationend", resetAnimation);
+            element.removeEventListener("animationcancel", resetAnimation);
 			resolve();
 		};
 		element.addEventListener("transitionend", resetAnimation);

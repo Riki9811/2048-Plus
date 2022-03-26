@@ -7,7 +7,10 @@
 		<title>2048</title>
 		<link rel="stylesheet" href="style.css" />
 		<link rel="stylesheet" href="Tile.css" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
 		<script src="script.js" type="module"></script>
 	</head>
 	<body>
@@ -28,9 +31,10 @@
 					</svg>
 				</button>
 			</div>
-			<div class="title" id="title">2048
-                <span id="sub-title">WxH</span>
-            </div>
+			<div class="title" id="title">
+				2048
+				<span id="sub-title">WxH</span>
+			</div>
 			<div class="menu menu-right">
 				<div class="score-container">
 					Score
@@ -38,12 +42,14 @@
 				</div>
 				<button id="stats-btn" class="icon-btn">
 					<svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 0 24 24" width="30">
-						<path d="M16,11V3H8v6H2v12h20V11H16z M10,5h4v14h-4V5z M4,11h4v8H4V11z M20,19h-4v-6h4V19z"></path>
+						<path
+							d="M16,11V3H8v6H2v12h20V11H16z M10,5h4v14h-4V5z M4,11h4v8H4V11z M20,19h-4v-6h4V19z"
+						></path>
 					</svg>
 				</button>
 				<button id="theme-btn" class="icon-btn">
-                    <div class="theme-btn-rays"></div>
-                    <div class="theme-btn-middle"></div>
+					<div class="theme-btn-rays"></div>
+					<div class="theme-btn-middle"></div>
 				</button>
 			</div>
 		</header>
@@ -54,16 +60,29 @@
 				<h2 class="modal-title">How To Play</h2>
 				<div class="modal-body">
 					<div class="modal-section">
-						<p>This is a recreation of the original 2048 game, the aim of the game is to combine tiles with the same value.</p>
 						<p>
-							Pressing the arrow keys will move all tiles in the direction of the key pressed. After all the tiles are done moving a new tile with
-							a value of 2 or 4 will be created in a random empty cell.
+							This is a recreation of the original 2048 game, the aim of the game is to combine tiles with
+							the same value.
 						</p>
-						<p>Two tiles with the same number will merge when they collide to create a single tile with double the value.</p>
+						<p>
+							Pressing the arrow keys will move all tiles in the direction of the key pressed. After all
+							the tiles are done moving a new tile with a value of 2 or 4 will be created in a random
+							empty cell.
+						</p>
+						<p>
+							Two tiles with the same number will merge when they collide to create a single tile with
+							double the value.
+						</p>
 						<p>The game is over when there are no valid ways for you to move the tiles.</p>
 					</div>
 					<div class="modal-section" id="example-section">
-						<svg class="arrow-keys" data-arrow-keys="" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="180 230 400 260">
+						<svg
+							class="arrow-keys"
+							data-arrow-keys=""
+							xmlns="http://www.w3.org/2000/svg"
+							version="1.1"
+							viewBox="180 230 400 260"
+						>
 							<g>
 								<path
 									class="arrow-left"
@@ -100,6 +119,55 @@
 							</g>
 						</svg>
 						<div id="info-board"></div>
+					</div>
+					<div class="modal-section">
+						<p class="info-reopen-message">
+							At any point you can view this guide again by clicking on the '
+							<svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 0 24 24" width="30">
+								<path
+									d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"
+								></path>
+							</svg>
+							' button in the top left of the screen.
+						</p>
+					</div>
+				</div>
+			</div>
+		</template>
+		<template data-stats-modal-template="">
+			<div class="modal" data-modal="" role="dialog">
+				<button class="modal-close-btn" data-modal-close="">×</button>
+				<h2 class="modal-title">Statistics</h2>
+				<div class="modal-body">
+					<div class="modal-section" id="stats-modal-grid">
+						<div class="stat-container record">
+							<p>Current Score</p>
+							<p data-current-score="">-1</p>
+						</div>
+						<div class="stat-container record">
+							<p>Current Biggest Tile</p>
+							<p data-current-big-tile="">-1</p>
+						</div>
+						<div class="stat-container">
+							<p>Best Score</p>
+							<p data-best-score="">-1</p>
+						</div>
+						<div class="stat-container">
+							<p>All Time Biggest Tile</p>
+							<p data-best-big-tile="">-1</p>
+						</div>
+					</div>
+					<div class="modal-section" id="stats-modal-share">
+						<button id="share-btn">
+							<svg width="27" height="27" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+								<circle cx="22.5" cy="7.5" r="4.3" />
+								<circle cx="7.5" cy="15" r="4.3" />
+								<circle cx="22.5" cy="22.5" r="4.3" />
+								<line x1="22.5" y1="7.5" x2="7.5" y2="15" stroke-width="3" stroke="var(--text)" />
+								<line x1="22.5" y1="22.5" x2="7.5" y2="15" stroke-width="3" stroke="var(--text)" />
+							</svg>
+							<p>Share</p>
+						</button>
 					</div>
 				</div>
 			</div>

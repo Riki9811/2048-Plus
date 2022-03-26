@@ -16,7 +16,8 @@
 	--color-tone-5: #bbada0;
 	--color-tone-6: #cbc0b3;
 	--color-tone-7: #f9f5f1;
-	--color-accent: rgb(36, 142, 241);
+	--color-accent: #f23b0d;
+	--color-accent-dark: #df4620;
 
 	--text: var(--color-tone-1);
 	--text-dark: var(--color-tone-1);
@@ -38,6 +39,8 @@
 	--color-tone-5: #272729;
 	--color-tone-6: #1a1a1b;
 	--color-tone-7: #121213;
+	--color-accent: #248ef1;
+	--color-accent-dark: #1969b3;
 
 	--text: var(--color-tone-0);
 	--text-dark: var(--color-tone-1);
@@ -115,16 +118,16 @@ button:focus-visible {
 }
 
 #title {
-    position: relative;
+	position: relative;
 }
 
 #sub-title {
 	font-size: 50%;
 	color: var(--text-darker);
 	font-weight: bold;
-    position: absolute;
-    bottom: 9%;
-    left: 105%;
+	position: absolute;
+	bottom: 9%;
+	left: 105%;
 }
 
 .menu.menu-right {
@@ -259,7 +262,7 @@ button:focus-visible {
 	align-items: center;
 	justify-content: center;
 	opacity: 0;
-	transition: opacity 250ms ease-in-out, transform 250ms ease-in-out;
+	transition: opacity 250ms ease-in-out;
 }
 
 .modal-backdrop.show {
@@ -275,12 +278,14 @@ button:focus-visible {
 	padding: 2rem;
 	font-size: 1.2rem;
 	max-width: 90vmin;
-	/* transform: translateY(1vmin); */
-	transition: transform 25ms ease-in-out;
+	min-width: 40vmin;
+	transform: scale(0);
+	transition: transform 250ms ease-in-out;
 }
 
 .modal-backdrop.show > .modal {
-	transform: translateY(0);
+	transform: scale(1);
+	transition: transform 250ms cubic-bezier(0.36, 0.35, 0.48, 1.25);
 }
 
 .modal-close-btn {
@@ -349,6 +354,12 @@ button:focus-visible {
 #example-section {
 	display: flex;
 	justify-content: space-evenly;
+	padding-bottom: 1em;
+}
+
+.info-reopen-message > svg {
+    transform: translateY(0.4em);
+    margin-inline: -0.25em;
 }
 
 #info-board {
@@ -361,4 +372,84 @@ button:focus-visible {
 	padding: var(--cell-gap);
 	border-radius: 2vmin;
 	position: relative;
+}
+
+#share-btn {
+	background: var(--color-accent-dark);
+	color: var(--text);
+	padding: 1rem 2.5rem;
+	font-size: inherit;
+	border: none;
+	border-radius: 0.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	fill: var(--text);
+	cursor: pointer;
+	gap: 1rem;
+	font-weight: bold;
+}
+
+#share-btn:hover,
+#share-btn:focus-visible {
+	background: var(--color-accent);
+}
+
+body:not(.darkmode) #share-btn {
+	--text: white;
+}
+
+#stats-modal-grid {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: auto auto;
+    column-gap: 4em;
+    row-gap: 2em;
+    padding: 1em;
+}
+
+.stat-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-container > p:first-child {
+    color: var(--text-darker);
+    position: relative;
+}
+
+.stat-container > p:last-child {
+    font-weight: bolder;
+}
+
+.stat-container.record >p:first-child:after {
+    content: "NEW RECORD";
+    position: absolute;
+    top: -0.6em;
+    left: calc(100% - 3em);
+    font-size: 65%;
+    text-align: center;
+    width: 13ch;
+    animation: recordFlash 1s ease-in-out infinite;
+}
+
+@keyframes recordFlash {
+    0% {
+        color: var(--text-dark);
+        transform: rotate(20deg) scale(.7);
+    }
+    50% {
+        color: var(--color-accent);
+        transform: rotate(20deg) scale(1);
+    }
+    100% {
+        color: var(--text-dark);
+        transform: rotate(20deg) scale(.7);
+    }
+}
+
+#stats-modal-share {
+    display: grid;
+    place-items: center;
 }

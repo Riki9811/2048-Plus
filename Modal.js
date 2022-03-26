@@ -41,7 +41,7 @@ export default class Modal {
 
 	hide() {
 		this.modalContainer.classList.remove("show");
-		waitForAnimation(this.modalContainer).then(() => {
+		waitForAnimation(this.modalContainer, false).then(() => {
 			this.modalContainer.remove();
 		});
 		(this.previousFocus ?? document.body).focus();
@@ -92,7 +92,7 @@ export async function setupInfoModal(modal) {
 }
 
 export function disableButtons(btns) {
-    for (const btn of btns) btn.disabled = true;
+	for (const btn of btns) btn.disabled = true;
 }
 
 export function enableButtons(btns) {

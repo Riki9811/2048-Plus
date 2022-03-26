@@ -7,6 +7,8 @@ export default class StorageManager {
 	#sizeChangeCallbacks;
 	#darkModeChangeCallbacks;
 	#statsChangeCallbacks;
+    #previusBestScore;
+    #previousBiggestTile;
 
 	/**
 	 * Creates an istance of StorageManager. If there currentSize and stats
@@ -19,7 +21,10 @@ export default class StorageManager {
 
 		if (localStorage.getItem(CURRENT_SIZE_KEY) == null) {
 			this.currentSize = DEFAULT_SIZE;
-		}
+		} else {
+            this.savePreviousRecords(this.currentSize);
+        }
+        
 		if (localStorage.getItem(STATS_KEY) == null) {
 			let defaultStats = new Map();
 			defaultStats.set(sizeToStatKey(this.currentSize), { bestScore: 0, biggestTile: 0 });
@@ -69,6 +74,7 @@ export default class StorageManager {
 	 */
 	set currentSize(value) {
 		this.#saveValue(CURRENT_SIZE_KEY, value);
+        this.savePreviousRecords(value)
 		this.#triggerSizeChange(value);
     }
     //#endregion
@@ -123,6 +129,22 @@ export default class StorageManager {
 			newStats.set(sizeKey, { bestScore, biggestTile });
 		}
 		this.#stats = newStats;
+    }
+    //#endregion
+
+    //#region PREVIOUS RECORD
+    savePreviousRecords(value) {
+        const sizeStats = this.stats?.get(sizeToStatKey(value ? value : this.currentSize));
+        this.#previusBestScore = sizeStats?.bestScore | 0;
+        this.#previousBiggestTile = sizeStats?.biggestTile | 0;
+    }
+
+    get previousBestScore() {
+        return this.#previusBestScore;
+    }
+
+    get previousBiggestTile() {
+        return this.#previousBiggestTile;
     }
     //#endregion
 

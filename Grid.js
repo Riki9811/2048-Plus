@@ -170,6 +170,8 @@ export default class Grid {
 
 			if (!this.canMoveUp() && !this.canMoveDown() && !this.canMoveLeft() && !this.canMoveRight()) {
 				newTile.waitForTransition().then(() => alert("You lose"));
+                storage.savePreviousRecords();
+                console.log({score: storage.previousBestScore, tile: storage.previousBiggestTile});
 			}
 		}
 

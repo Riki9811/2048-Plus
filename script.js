@@ -5,6 +5,9 @@ import StorageManager from "./utils/localStorageManager.js";
 //#region MANAGERS
 export const storage = new StorageManager();
 
+console.log({score: storage.previousBestScore, tile: storage.previousBiggestTile});
+storage.sizeChangeSubscribe(() => console.log({ score: storage.previousBestScore, tile: storage.previousBiggestTile }));
+
 const manager = Singleton.instance();
 manager.setupInput();
 //#endregion
@@ -52,4 +55,19 @@ const infoModal = new Modal(document.querySelector("[data-info-modal-template]")
 	},
 });
 infoBtn.addEventListener("click", () => infoModal.show());
+//#endregion
+
+//#region INFO MODAL
+const statsModal = new Modal(document.querySelector("[data-stats-modal-template]"), {
+	onOpen: (modal) => {
+		disableButtons([infoBtn, statsBtn, menuBtn, themeBtn]);
+		manager.stopInput();
+	},
+	onClose: () => {
+		enableButtons([infoBtn, statsBtn, menuBtn, themeBtn]);
+		manager.setupInput();
+	},
+});
+statsBtn.addEventListener("click", () => statsModal.show());
+statsModal.show();
 //#endregion
