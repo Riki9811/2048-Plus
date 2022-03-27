@@ -91,6 +91,26 @@ export async function setupInfoModal(modal) {
 	setupInfoModal(modal);
 }
 
+export async function setupStatsModal(modal, storage, gameManager) {
+	const currScoreElem = modal.querySelector("[data-current-score]");
+	const currTileElem = modal.querySelector("[data-current-big-tile]");
+
+	// Set current stats
+	currScoreElem.textContent = gameManager.score;
+	currTileElem.textContent = gameManager.biggestTileValue;
+
+	// Add class "record" if beating best
+	if (gameManager.score > storage.previousBestScore) currScoreElem.parentElement.classList.add("record");
+	else currScoreElem.parentElement.classList.remove("record");
+
+	if (gameManager.biggestTileValue > storage.previousBiggestTile) currTileElem.parentElement.classList.add("record");
+	else currTileElem.parentElement.classList.remove("record");
+
+	// Set previous stats
+	modal.querySelector("[data-best-score]").textContent = storage.previousBestScore;
+	modal.querySelector("[data-best-big-tile]").textContent = storage.previousBiggestTile;
+}
+
 export function disableButtons(btns) {
 	for (const btn of btns) btn.disabled = true;
 }

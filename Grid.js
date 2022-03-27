@@ -144,7 +144,7 @@ export default class Grid {
 	addTile(val) {
 		const newTile = new Tile(this.#gridElement, val);
 		this.randomEmptyCell().tile = newTile;
-		this.checkBiggestTileValue(val);
+		this.checkBiggestTileValue(newTile.value);
 		return newTile;
 	}
 
@@ -153,7 +153,7 @@ export default class Grid {
 		if (this.#cells[index].tile == null) {
 			const newTile = new Tile(this.#gridElement, val);
 			this.#cells[index].tile = newTile;
-			this.checkBiggestTileValue(val);
+			this.checkBiggestTileValue(newTile.value);
 			return newTile;
 		}
 		return undefined;
@@ -170,8 +170,8 @@ export default class Grid {
 
 			if (!this.canMoveUp() && !this.canMoveDown() && !this.canMoveLeft() && !this.canMoveRight()) {
 				newTile.waitForTransition().then(() => alert("You lose"));
-                storage.savePreviousRecords();
-                console.log({score: storage.previousBestScore, tile: storage.previousBiggestTile});
+                Singleton.instance().gameOver = true;
+                return;
 			}
 		}
 

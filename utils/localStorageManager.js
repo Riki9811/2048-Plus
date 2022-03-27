@@ -22,7 +22,7 @@ export default class StorageManager {
 		if (localStorage.getItem(CURRENT_SIZE_KEY) == null) {
 			this.currentSize = DEFAULT_SIZE;
 		} else {
-            this.savePreviousRecords(this.currentSize);
+            this.readPreviousRecords(this.currentSize);
         }
         
 		if (localStorage.getItem(STATS_KEY) == null) {
@@ -74,7 +74,7 @@ export default class StorageManager {
 	 */
 	set currentSize(value) {
 		this.#saveValue(CURRENT_SIZE_KEY, value);
-        this.savePreviousRecords(value)
+        this.readPreviousRecords(value)
 		this.#triggerSizeChange(value);
     }
     //#endregion
@@ -133,7 +133,7 @@ export default class StorageManager {
     //#endregion
 
     //#region PREVIOUS RECORD
-    savePreviousRecords(value) {
+    readPreviousRecords(value) {
         const sizeStats = this.stats?.get(sizeToStatKey(value ? value : this.currentSize));
         this.#previusBestScore = sizeStats?.bestScore | 0;
         this.#previousBiggestTile = sizeStats?.biggestTile | 0;

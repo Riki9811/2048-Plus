@@ -1,5 +1,5 @@
 import Grid from "./Grid.js";
-import { storage } from "./script.js";
+import { statsModal, storage } from "./script.js";
 
 var Singleton = (function () {
 	var instance;
@@ -26,15 +26,36 @@ class GameManager {
 	#grid;
 	#boundHandleInput;
 	#resizeWidnowTimeout;
+	#gameOver;
 
 	constructor() {
-		this.#score = 0;
+        this.resetGame();
 		this.#scoreCounter = document.getElementById("score-counter");
 		this.#boundHandleInput = this.#handleInput.bind(this);
-		this.resetGrid(storage.currentSize);
 	}
 
-	resetGrid(size) {
+	//#region GETTERS
+	get score() {
+		return this.#score;
+	}
+	get biggestTileValue() {
+		return this.#grid.biggestTileValue;
+	}
+	//#endregion
+
+	//#region SETTERS
+	/**
+	 * Sets the gameOver state
+	 * @param {boolean} value
+	 */
+	set gameOver(value) {
+		if (value) this.#endGame();
+		this.#gameOver = value;
+	}
+	//#endregion
+
+	//#region GAME-STATE MODIFICATION
+	#resetGrid(size) {
 		const gameBoard = document.getElementById("game-board");
 		this.#grid = new Grid(gameBoard, size.w, size.h);
 		window.addEventListener("resize", () => {
@@ -45,24 +66,29 @@ class GameManager {
 		this.#grid.addTile();
 		this.#grid.addTile();
 	}
-
-	get score() {
-		return this.#score;
-	}
-
 	addScore(value) {
 		this.#score += value;
 		this.#scoreCounter.textContent = this.#score;
 	}
+	#endGame() {
+		storage.registerStats(this.score, this.#grid.biggestTileValue);
+		statsModal.show();
+		storage.readPreviousRecords();
+	}
+	resetGame() {
+		this.#resetGrid(storage.currentSize);
+		this.#score = 0;
+		this.#gameOver = false;
+	}
+	//#endregion
 
+	//#region INPUT
 	setupInput() {
 		window.addEventListener("keydown", this.#boundHandleInput, { once: true });
 	}
-
 	stopInput() {
 		window.removeEventListener("keydown", this.#boundHandleInput);
 	}
-
 	async #handleInput(e) {
 		switch (e.key) {
 			case "ArrowUp":
@@ -99,5 +125,6 @@ class GameManager {
 		}
 
 		this.setupInput();
-    }
+	}
+	//#endregion
 }

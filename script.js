@@ -1,12 +1,9 @@
 import Singleton from "./GameManager.js";
-import Modal, { disableButtons, enableButtons, setupInfoModal } from "./Modal.js";
+import Modal, { disableButtons, enableButtons, setupInfoModal, setupStatsModal } from "./Modal.js";
 import StorageManager from "./utils/localStorageManager.js";
 
 //#region MANAGERS
 export const storage = new StorageManager();
-
-console.log({score: storage.previousBestScore, tile: storage.previousBiggestTile});
-storage.sizeChangeSubscribe(() => console.log({ score: storage.previousBestScore, tile: storage.previousBiggestTile }));
 
 const manager = Singleton.instance();
 manager.setupInput();
@@ -26,7 +23,7 @@ title.textContent = `${storage.currentSize.w}x${storage.currentSize.h}`;
 // Listen to size change and update subTitle
 storage.sizeChangeSubscribe((newSize) => (title.textContent = `${newSize.w}x${newSize.h}`));
 // Listen to size change and update grid
-storage.sizeChangeSubscribe((newSize) => manager.resetGrid(newSize));
+storage.sizeChangeSubscribe(() => manager.resetGame());
 //#endregion
 
 //#region DARK MODE TOGGLE
@@ -58,10 +55,11 @@ infoBtn.addEventListener("click", () => infoModal.show());
 //#endregion
 
 //#region INFO MODAL
-const statsModal = new Modal(document.querySelector("[data-stats-modal-template]"), {
+export const statsModal = new Modal(document.querySelector("[data-stats-modal-template]"), {
 	onOpen: (modal) => {
 		disableButtons([infoBtn, statsBtn, menuBtn, themeBtn]);
 		manager.stopInput();
+        setupStatsModal(modal, storage, manager);
 	},
 	onClose: () => {
 		enableButtons([infoBtn, statsBtn, menuBtn, themeBtn]);
@@ -69,5 +67,4 @@ const statsModal = new Modal(document.querySelector("[data-stats-modal-template]
 	},
 });
 statsBtn.addEventListener("click", () => statsModal.show());
-statsModal.show();
 //#endregion
