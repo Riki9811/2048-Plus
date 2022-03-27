@@ -358,8 +358,8 @@ button:focus-visible {
 }
 
 .info-reopen-message > svg {
-    transform: translateY(0.4em);
-    margin-inline: -0.25em;
+	transform: translateY(0.4em);
+	margin-inline: -0.25em;
 }
 
 #info-board {
@@ -388,6 +388,9 @@ button:focus-visible {
 	cursor: pointer;
 	gap: 1rem;
 	font-weight: bold;
+	position: relative;
+	flex-grow: 1;
+	width: 100%;
 }
 
 #share-btn:hover,
@@ -399,57 +402,76 @@ body:not(.darkmode) #share-btn {
 	--text: white;
 }
 
+#share-btn-tooltip {
+	content: "Copied to clipboard!";
+	position: absolute;
+	top: -0.7em;
+	width: 22ch;
+	background: var(--text-darker);
+	padding: 1em;
+	font-size: 60%;
+	border-radius: inherit;
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+	transform: translateY(-100%);
+}
+
+#share-btn.show-tooltip > #share-btn-tooltip {
+    opacity: 1;
+}
+
 #stats-modal-grid {
-    display: grid;
-    justify-items: center;
-    grid-template-columns: auto auto;
-    column-gap: 4em;
-    row-gap: 2em;
-    padding: 1em;
+	display: grid;
+	justify-items: center;
+	grid-template-columns: auto auto;
+	column-gap: 4em;
+	row-gap: 2em;
+	padding: 1em;
 }
 
 .stat-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .stat-container > p:first-child {
-    color: var(--text-darker);
-    position: relative;
+	color: var(--text-darker);
+	position: relative;
 }
 
 .stat-container > p:last-child {
-    font-weight: bolder;
+	font-weight: bolder;
 }
 
-.stat-container.record >p:first-child:after {
-    content: "NEW RECORD";
-    position: absolute;
-    top: -0.6em;
-    left: calc(100% - 3em);
-    font-size: 65%;
-    text-align: center;
-    width: 13ch;
-    animation: recordFlash 1s ease-in-out infinite;
+.stat-container.record > p:first-child:after {
+	content: "NEW RECORD";
+	position: absolute;
+	top: -0.6em;
+	left: calc(100% - 3em);
+	font-size: 65%;
+	text-align: center;
+	width: 13ch;
+	animation: recordFlash 1s ease-in-out infinite;
 }
 
 @keyframes recordFlash {
-    0% {
-        color: var(--text-dark);
-        transform: rotate(20deg) scale(.7);
-    }
-    50% {
-        color: var(--color-accent);
-        transform: rotate(20deg) scale(1);
-    }
-    100% {
-        color: var(--text-dark);
-        transform: rotate(20deg) scale(.7);
-    }
+	0% {
+		color: var(--text-dark);
+		transform: rotate(20deg) scale(0.7);
+	}
+	50% {
+		color: var(--color-accent);
+		transform: rotate(20deg) scale(1);
+	}
+	100% {
+		color: var(--text-dark);
+		transform: rotate(20deg) scale(0.7);
+	}
 }
 
 #stats-modal-share {
-    display: grid;
-    place-items: center;
+	display: grid;
+	place-items: center;
+	padding-inline: 3em;
 }

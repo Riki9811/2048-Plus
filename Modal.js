@@ -1,3 +1,4 @@
+import Singleton from "./GameManager.js";
 import Grid from "./Grid.js";
 import { waitForAnimation, animateElement } from "./utils/animation.js";
 import wait from "./utils/wait.js";
@@ -93,7 +94,9 @@ export async function setupInfoModal(modal) {
 
 export async function setupStatsModal(modal, storage, gameManager) {
 	const currScoreElem = modal.querySelector("[data-current-score]");
-	const currTileElem = modal.querySelector("[data-current-big-tile]");
+    const currTileElem = modal.querySelector("[data-current-big-tile]");
+    const shareBtn = modal.querySelector("#share-btn");
+    const shareBtnTooltip = modal.querySelector("#share-btn-tooltip");
 
 	// Set current stats
 	currScoreElem.textContent = gameManager.score;
@@ -108,7 +111,49 @@ export async function setupStatsModal(modal, storage, gameManager) {
 
 	// Set previous stats
 	modal.querySelector("[data-best-score]").textContent = storage.previousBestScore;
-	modal.querySelector("[data-best-big-tile]").textContent = storage.previousBiggestTile;
+    modal.querySelector("[data-best-big-tile]").textContent = storage.previousBiggestTile;
+    
+    // Share btn click
+    let messageTimeOut;
+    shareBtn.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(makeShareText());
+        shareBtn.classList.add("show-tooltip");
+		if (messageTimeOut != null) clearTimeout(messageTimeOut);
+		messageTimeOut = setTimeout(() => {
+			shareBtn.classList.remove("show-tooltip");
+		}, 3000);
+    })
+    shareBtnTooltip.addEventListener("click", (evt) => {
+        if (messageTimeOut != null) clearTimeout(messageTimeOut);
+        shareBtnTooltip.style.transition = "100ms";
+        shareBtn.classList.remove("show-tooltip");
+        waitForAnimation(shareBtn).then(() => {
+			shareBtnTooltip.style.transitionDuration = null;
+		});
+        evt.stopPropagation();
+    })
+}
+
+function makeShareText() {
+    const score = numberToEmojis(Singleton.instance().score);
+	const bigTileVal = numberToEmojis(Singleton.instance().biggestTileValue);
+    const text = `2048 Plus:\nScore: ${score}\nBiggest tile: ${bigTileVal}\nCan you do better? ${window.location}\n#2048-Plus`;
+    return text;
+}
+
+function numberToEmojis(number) {
+	return number
+		.toString()
+		.replace(/0/g, "0️⃣")
+		.replace(/1/g, "1️⃣")
+		.replace(/2/g, "2️⃣")
+		.replace(/3/g, "3️⃣")
+		.replace(/4/g, "4️⃣")
+		.replace(/5/g, "5️⃣")
+		.replace(/6/g, "6️⃣")
+		.replace(/7/g, "7️⃣")
+		.replace(/8/g, "8️⃣")
+		.replace(/9/g, "9️⃣");
 }
 
 export function disableButtons(btns) {
