@@ -196,8 +196,8 @@
 	color: var(--tile-text-gold);
 	background: var(--col-super);
 	font-size: calc(var(--cell-size) / 5.2);
-    padding: calc(var(--cell-size) / 80);
-    text-align: center;
+	padding: calc(var(--cell-size) / 80);
+	text-align: center;
 }
 
 .tile.tile-super::before {

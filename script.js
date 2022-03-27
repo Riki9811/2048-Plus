@@ -27,8 +27,15 @@ storage.sizeChangeSubscribe(() => manager.resetGame());
 //#endregion
 
 //#region DARK MODE TOGGLE
-// Set starting state
-if (storage.darkMode) document.body.classList.add("darkmode");
+// Set starting state (without animating)
+if (storage.darkMode) {
+    const themeBtnChildren = themeBtn.children;
+    for (const child of themeBtnChildren) child.style.transitionDuration = "0s"
+    document.body.classList.add("darkmode");
+    setTimeout(() => {
+    for (const child of themeBtnChildren) child.style.transitionDuration = null;
+	}, 1);
+}
 // Listen to theme change event
 storage.darkModeChangeSubscribe((newDarkMode) => {
 	if (newDarkMode) document.body.classList.add("darkmode");

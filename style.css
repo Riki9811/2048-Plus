@@ -411,13 +411,13 @@ body:not(.darkmode) #share-btn {
 	padding: 1em;
 	font-size: 60%;
 	border-radius: inherit;
-    opacity: 0;
-    transition: opacity 250ms ease-in-out;
+	opacity: 0;
+	transition: opacity 250ms ease-in-out;
 	transform: translateY(-100%);
 }
 
 #share-btn.show-tooltip > #share-btn-tooltip {
-    opacity: 1;
+	opacity: 1;
 }
 
 #stats-modal-grid {

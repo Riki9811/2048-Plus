@@ -7,10 +7,7 @@
 		<title>2048 Plus</title>
 		<link rel="stylesheet" href="style.css" />
 		<link rel="stylesheet" href="Tile.css" />
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-		/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 		<script src="script.js" type="module"></script>
 	</head>
 	<body>
@@ -42,9 +39,7 @@
 				</div>
 				<button id="stats-btn" class="icon-btn">
 					<svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 0 24 24" width="30">
-						<path
-							d="M16,11V3H8v6H2v12h20V11H16z M10,5h4v14h-4V5z M4,11h4v8H4V11z M20,19h-4v-6h4V19z"
-						></path>
+						<path d="M16,11V3H8v6H2v12h20V11H16z M10,5h4v14h-4V5z M4,11h4v8H4V11z M20,19h-4v-6h4V19z"></path>
 					</svg>
 				</button>
 				<button id="theme-btn" class="icon-btn">
@@ -60,29 +55,16 @@
 				<h2 class="modal-title">How To Play</h2>
 				<div class="modal-body">
 					<div class="modal-section">
+						<p>This is a recreation of the original 2048 game, the aim of the game is to combine tiles with the same value.</p>
 						<p>
-							This is a recreation of the original 2048 game, the aim of the game is to combine tiles with
-							the same value.
+							Pressing the arrow keys will move all tiles in the direction of the key pressed. After all the tiles are done moving a new tile with
+							a value of 2 or 4 will be created in a random empty cell.
 						</p>
-						<p>
-							Pressing the arrow keys will move all tiles in the direction of the key pressed. After all
-							the tiles are done moving a new tile with a value of 2 or 4 will be created in a random
-							empty cell.
-						</p>
-						<p>
-							Two tiles with the same number will merge when they collide to create a single tile with
-							double the value.
-						</p>
+						<p>Two tiles with the same number will merge when they collide to create a single tile with double the value.</p>
 						<p>The game is over when there are no valid ways for you to move the tiles.</p>
 					</div>
 					<div class="modal-section" id="example-section">
-						<svg
-							class="arrow-keys"
-							data-arrow-keys=""
-							xmlns="http://www.w3.org/2000/svg"
-							version="1.1"
-							viewBox="180 230 400 260"
-						>
+						<svg class="arrow-keys" data-arrow-keys="" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="180 230 400 260">
 							<g>
 								<path
 									class="arrow-left"
@@ -167,7 +149,7 @@
 								<line x1="22.5" y1="22.5" x2="7.5" y2="15" stroke-width="3" stroke="var(--text)" />
 							</svg>
 							<p>Share</p>
-                            <span id="share-btn-tooltip">Copied to clipboard!</span>
+							<span id="share-btn-tooltip">Copied to clipboard!</span>
 						</button>
 					</div>
 				</div>

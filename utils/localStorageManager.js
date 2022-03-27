@@ -7,8 +7,8 @@ export default class StorageManager {
 	#sizeChangeCallbacks;
 	#darkModeChangeCallbacks;
 	#statsChangeCallbacks;
-    #previusBestScore;
-    #previousBiggestTile;
+	#previusBestScore;
+	#previousBiggestTile;
 
 	/**
 	 * Creates an istance of StorageManager. If there currentSize and stats
@@ -22,9 +22,9 @@ export default class StorageManager {
 		if (localStorage.getItem(CURRENT_SIZE_KEY) == null) {
 			this.currentSize = DEFAULT_SIZE;
 		} else {
-            this.readPreviousRecords(this.currentSize);
-        }
-        
+			this.readPreviousRecords(this.currentSize);
+		}
+
 		if (localStorage.getItem(STATS_KEY) == null) {
 			let defaultStats = new Map();
 			defaultStats.set(sizeToStatKey(this.currentSize), { bestScore: 0, biggestTile: 0 });
@@ -32,7 +32,7 @@ export default class StorageManager {
 		}
 	}
 
-    //#region GENERAL GETTER AND SETTER
+	//#region GENERAL GETTER AND SETTER
 	/**
 	 * Returns the value associated to key in localStorage.
 	 * If key is not found returns defaultValue.
@@ -59,10 +59,10 @@ export default class StorageManager {
 		if (key === STATS_KEY) newVal = JSON.stringify(Array.from(val.entries()));
 		else newVal = JSON.stringify(val);
 		localStorage.setItem(key, newVal);
-    }
-    //#endregion
+	}
+	//#endregion
 
-    //#region CURRENT SIZE
+	//#region CURRENT SIZE
 	/**
 	 * Returns the value of currentSize found in localStorage.
 	 */
@@ -74,12 +74,12 @@ export default class StorageManager {
 	 */
 	set currentSize(value) {
 		this.#saveValue(CURRENT_SIZE_KEY, value);
-        this.readPreviousRecords(value)
+		this.readPreviousRecords(value);
 		this.#triggerSizeChange(value);
-    }
-    //#endregion
+	}
+	//#endregion
 
-    //#region DARK MODE
+	//#region DARK MODE
 	/**
 	 * Returns the value of darkMode found in localStorage
 	 * If the value is not found RETURNS system preferences
@@ -94,10 +94,10 @@ export default class StorageManager {
 	set darkMode(value) {
 		this.#saveValue(DARK_MODE_KEY, value);
 		this.#triggerDarkModeChange(value);
-    }
-    //#endregion
+	}
+	//#endregion
 
-    //#region STATS
+	//#region STATS
 	/**
 	 * Returns the value of stats found in localStorage.
 	 * @returns {Map<string, {bestScore, biggestTile}}
@@ -129,26 +129,26 @@ export default class StorageManager {
 			newStats.set(sizeKey, { bestScore, biggestTile });
 		}
 		this.#stats = newStats;
-    }
-    //#endregion
+	}
+	//#endregion
 
-    //#region PREVIOUS RECORD
-    readPreviousRecords(value) {
-        const sizeStats = this.stats?.get(sizeToStatKey(value ? value : this.currentSize));
-        this.#previusBestScore = sizeStats?.bestScore | 0;
-        this.#previousBiggestTile = sizeStats?.biggestTile | 0;
-    }
+	//#region PREVIOUS RECORD
+	readPreviousRecords(value) {
+		const sizeStats = this.stats?.get(sizeToStatKey(value ? value : this.currentSize));
+		this.#previusBestScore = sizeStats?.bestScore | 0;
+		this.#previousBiggestTile = sizeStats?.biggestTile | 0;
+	}
 
-    get previousBestScore() {
-        return this.#previusBestScore;
-    }
+	get previousBestScore() {
+		return this.#previusBestScore;
+	}
 
-    get previousBiggestTile() {
-        return this.#previousBiggestTile;
-    }
-    //#endregion
+	get previousBiggestTile() {
+		return this.#previousBiggestTile;
+	}
+	//#endregion
 
-    //#region LOCALSTORAGE KEY PRESENCE
+	//#region LOCALSTORAGE KEY PRESENCE
 	/**
 	 * Checks if a key is present in localStorage
 	 * @param {string} key Key to check
@@ -163,8 +163,8 @@ export default class StorageManager {
 	 */
 	hasDarkModePreference() {
 		return this.#hasKey(DARK_MODE_KEY);
-    }
-    //#endregion
+	}
+	//#endregion
 
 	//#region EVENT SUBSCRIBERS
 	/**

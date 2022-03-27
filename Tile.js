@@ -45,9 +45,9 @@ export default class Tile {
 	get #tileClassName() {
 		if (this.#value > 2097152) return "tile-super";
 		return `tile-${this.#value}`;
-    }
-    
-    setTransition(on = true) {
-        this.#tileElement.style.transition = on ? null : "none";
-    }
+	}
+
+	setTransition(on = true) {
+		this.#tileElement.style.transition = on ? null : "none";
+	}
 }

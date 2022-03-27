@@ -1,5 +1,6 @@
 import Singleton from "./GameManager.js";
 import Grid from "./Grid.js";
+import { storage } from "./script.js";
 import { waitForAnimation, animateElement } from "./utils/animation.js";
 import wait from "./utils/wait.js";
 
@@ -94,9 +95,9 @@ export async function setupInfoModal(modal) {
 
 export async function setupStatsModal(modal, storage, gameManager) {
 	const currScoreElem = modal.querySelector("[data-current-score]");
-    const currTileElem = modal.querySelector("[data-current-big-tile]");
-    const shareBtn = modal.querySelector("#share-btn");
-    const shareBtnTooltip = modal.querySelector("#share-btn-tooltip");
+	const currTileElem = modal.querySelector("[data-current-big-tile]");
+	const shareBtn = modal.querySelector("#share-btn");
+	const shareBtnTooltip = modal.querySelector("#share-btn-tooltip");
 
 	// Set current stats
 	currScoreElem.textContent = gameManager.score;
@@ -111,34 +112,35 @@ export async function setupStatsModal(modal, storage, gameManager) {
 
 	// Set previous stats
 	modal.querySelector("[data-best-score]").textContent = storage.previousBestScore;
-    modal.querySelector("[data-best-big-tile]").textContent = storage.previousBiggestTile;
-    
-    // Share btn click
-    let messageTimeOut;
-    shareBtn.addEventListener("click", async () => {
-        await navigator.clipboard.writeText(makeShareText());
-        shareBtn.classList.add("show-tooltip");
+	modal.querySelector("[data-best-big-tile]").textContent = storage.previousBiggestTile;
+
+	// Share btn click
+	let messageTimeOut;
+	shareBtn.addEventListener("click", async () => {
+		await navigator.clipboard.writeText(makeShareText());
+		shareBtn.classList.add("show-tooltip");
 		if (messageTimeOut != null) clearTimeout(messageTimeOut);
 		messageTimeOut = setTimeout(() => {
 			shareBtn.classList.remove("show-tooltip");
 		}, 3000);
-    })
-    shareBtnTooltip.addEventListener("click", (evt) => {
-        if (messageTimeOut != null) clearTimeout(messageTimeOut);
-        shareBtnTooltip.style.transition = "100ms";
-        shareBtn.classList.remove("show-tooltip");
-        waitForAnimation(shareBtn).then(() => {
+	});
+	shareBtnTooltip.addEventListener("click", (evt) => {
+		if (messageTimeOut != null) clearTimeout(messageTimeOut);
+		shareBtnTooltip.style.transition = "100ms";
+		shareBtn.classList.remove("show-tooltip");
+		waitForAnimation(shareBtn).then(() => {
 			shareBtnTooltip.style.transitionDuration = null;
 		});
-        evt.stopPropagation();
-    })
+		evt.stopPropagation();
+	});
 }
 
 function makeShareText() {
-    const score = numberToEmojis(Singleton.instance().score);
+	const score = numberToEmojis(Singleton.instance().score);
 	const bigTileVal = numberToEmojis(Singleton.instance().biggestTileValue);
-    const text = `2048 Plus:\nScore: ${score}\nBiggest tile: ${bigTileVal}\nCan you do better? ${window.location}\n#2048-Plus`;
-    return text;
+	const size = storage.currentSize;
+	const text = `2048 Plus #${size.w}x${size.h}:\nScore: ${score}\nBiggest tile: ${bigTileVal}\nCan you do better? ${window.location}\n#2048-Plus`;
+	return text;
 }
 
 function numberToEmojis(number) {
