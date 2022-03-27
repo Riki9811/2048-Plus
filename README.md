@@ -68,7 +68,7 @@ The game is over when there are no valid ways for you to move the tiles.
 -   [x] Info menu on how to play
 -   [x] Dark/light mode toggling
 -   [x] Saving statistics in local storage
--   [ ] Statistics menu
+-   [x] Statistics menu
 -   [ ] Hamburger-menu (prebuilt game sizes + custom)
 -   [ ] Swipe controls for mobile
 
