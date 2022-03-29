@@ -11,6 +11,8 @@ manager.setupInput();
 
 //#region REFERENCES
 const title = document.getElementById("sub-title");
+const menu = document.getElementById("menu");
+
 const infoBtn = document.getElementById("info-btn");
 const statsBtn = document.getElementById("stats-btn");
 const menuBtn = document.getElementById("menu-btn");
@@ -61,7 +63,7 @@ const infoModal = new Modal(document.querySelector("[data-info-modal-template]")
 infoBtn.addEventListener("click", () => infoModal.show());
 //#endregion
 
-//#region INFO MODAL
+//#region STATS MODAL
 export const statsModal = new Modal(document.querySelector("[data-stats-modal-template]"), {
 	onOpen: (modal) => {
 		disableButtons([infoBtn, statsBtn, menuBtn, themeBtn]);
@@ -74,4 +76,16 @@ export const statsModal = new Modal(document.querySelector("[data-stats-modal-te
 	},
 });
 statsBtn.addEventListener("click", () => statsModal.show());
+//#endregion
+
+//#region MENU MODAL
+menuBtn.addEventListener("click", () => {
+    if (menu.classList.contains("show")) {
+        menu.classList.remove("show");
+        document.body.classList.remove("menu-margin-left");
+    } else {
+        menu.classList.add("show");
+        document.body.classList.add("menu-margin-left");
+    }
+});
 //#endregion

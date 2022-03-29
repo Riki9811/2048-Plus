@@ -8,23 +8,19 @@ export default class Grid {
 	#cells;
 	#w;
 	#h;
-	#cellSize;
-	#cellGap;
 	#biggestTile;
 
-	constructor(gridElemet, w, h, { cellSize, cellGap } = {}) {
+	constructor(gridElemet, w, h, { cellSize = 70 / Math.max(w, h), cellGap } = {}) {
 		this.#w = w;
 		this.#h = h;
-		this.#cellSize = cellSize ? cellSize : 70 / Math.max(w, h);
-		this.#cellGap = cellGap ? cellGap : this.#cellSize / 10;
 		this.#gridElement = gridElemet;
-		this.#biggestTile = -1;
-
+        this.#biggestTile = -1;
+        
 		gridElemet.innerHTML = "";
 		gridElemet.style.setProperty("--grid-w", this.#w);
 		gridElemet.style.setProperty("--grid-h", this.#h);
-		gridElemet.style.setProperty("--cell-size", `${this.#cellSize}vmin`);
-		gridElemet.style.setProperty("--cell-gap", `${this.#cellGap}vmin`);
+		gridElemet.style.setProperty("--cell-size", `calc(${cellSize}vmin - 1rem)`);
+		gridElemet.style.setProperty("--cell-gap", cellGap ? `${cellGap}vmin` : `calc(var(--cell-size) / 10)`);
 		this.#cells = createCellElements(gridElemet, w, h).map((cellElement, index) => {
 			return new Cell(cellElement, index % this.#w, Math.floor(index / this.#w));
 		});
@@ -170,8 +166,8 @@ export default class Grid {
 
 			if (!this.canMoveUp() && !this.canMoveDown() && !this.canMoveLeft() && !this.canMoveRight()) {
 				newTile.waitForTransition().then(() => alert("You lose"));
-                Singleton.instance().gameOver = true;
-                return;
+				Singleton.instance().gameOver = true;
+				return;
 			}
 		}
 
