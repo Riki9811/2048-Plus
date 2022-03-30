@@ -59,28 +59,34 @@
 
 /* NORMAL */
 
+.size-btn:disabled[data-size="3"],
 .tile.tile-2 {
 	color: var(--tile-text-dark);
 	background: var(--col-2);
 }
 
+.size-btn:disabled[data-size="4"],
 .tile.tile-4 {
 	color: var(--tile-text-dark);
 	background: var(--col-4);
 }
 
+.size-btn:disabled[data-size="5"],
 .tile.tile-8 {
 	background: var(--col-8);
 }
 
+.size-btn:disabled[data-size="6"],
 .tile.tile-16 {
 	background: var(--col-16);
 }
 
+.size-btn:disabled[data-size="7"],
 .tile.tile-32 {
 	background: var(--col-32);
 }
 
+.size-btn:disabled[data-size="8"],
 .tile.tile-64 {
 	background: var(--col-64);
 }
@@ -91,14 +97,17 @@
 	font-size: calc(var(--cell-size) / 2.3);
 }
 
+.size-btn:disabled[data-size="9"],
 .tile.tile-128 {
 	background: var(--col-128);
 }
 
+.size-btn:disabled[data-size="10"],
 .tile.tile-256 {
 	background: var(--col-256);
 }
 
+.size-btn:disabled[data-size="Custom"],
 .tile.tile-512 {
 	background: var(--col-512);
 }

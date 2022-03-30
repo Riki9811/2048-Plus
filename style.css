@@ -26,7 +26,7 @@
 	--bg-cell: var(--color-tone-6);
 	--bg-main: var(--color-tone-7);
 	--border-color: var(--color-tone-3);
-	--menu-width: 20vw;
+	--menu-width: max(20vw, 25ch);
 }
 
 .darkmode {
@@ -69,7 +69,6 @@ body {
 	justify-content: space-between;
 	height: 100vh;
 	color: var(--text);
-	transition: margin-left 500ms ease-in-out;
 }
 
 header,
@@ -131,6 +130,7 @@ button:focus-visible {
 
 #title {
 	position: relative;
+	font-weight: bold;
 }
 
 #sub-title {
@@ -185,7 +185,10 @@ button:focus-visible {
 	aspect-ratio: 1;
 	fill: var(--text);
 	cursor: pointer;
-	background: var(--bg-main);
+}
+
+#menu-btn {
+	z-index: 100;
 }
 
 #theme-btn {
@@ -443,41 +446,76 @@ body:not(.darkmode) #share-btn {
 /* SIDE MENU */
 
 nav#menu {
+	user-select: none;
 	height: 100%;
-	width: 0;
+	width: 100vw;
 	position: fixed;
 	z-index: 1;
 	top: 0;
 	left: 0;
-	background: var(--bg-game-board);
+	background: var(--bg-cell);
 	overflow-x: hidden;
-	transition: width 500ms ease-in-out;
+	transform: translateX(-100%);
+	transition: transform 500ms cubic-bezier(0.4, 0, 0, 1);
+	display: flex;
+	flex-direction: column;
 }
 
 nav#menu.show {
-	width: var(--menu-width);
+	transform: none;
 }
 
 #menu-title {
+	width: 100%;
+	padding: 0.5em;
 	font-size: 2em;
+	font-weight: bold;
+	position: relative;
+	text-align: center;
 }
 
-#menu > div {
-	padding: 8px 8px 8px 32px;
-    width: 90%;
-    margin: auto;
+#menu > * {
+	white-space: nowrap;
 }
 
-#menu > button {
-    width: 90%;
-    margin: auto;
-    color: var(--text-dark);
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 250ms ease-in-out;
+.size-btn {
+	background: var(--bg-cell);
+	color: var(--text-dark);
+	border-radius: 1vmin;
+	border: none;
+	font-weight: bolder;
+	font-size: 3em;
+	cursor: pointer;
+	transition: color 250ms ease-in-out;
 }
 
-body.menu-margin-left {
-	margin-left: var(--menu-width);
+.size-btn:hover {
+	color: var(--text);
+}
+
+.size-btn:disabled {
+    cursor: not-allowed;
+	color: var(--tile-text-light);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#size-btns-container {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	border-radius: 2vmin;
+	padding: 2vmin;
+	gap: 2vmin;
+	width: 60vmin;
+	height: 60vmin;
+    background: var(--bg-game-board);
+}
+
+#size-btns-aligner {
+	display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
 }

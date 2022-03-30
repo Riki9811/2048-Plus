@@ -72,7 +72,9 @@ export default class StorageManager {
 	/**
 	 * Saves the value as currentSize in localStorage.
 	 */
-	set currentSize(value) {
+    set currentSize(value) {
+        if (!value.w) value.w = 4;
+        if (!value.h) value.h = 4;
 		this.#saveValue(CURRENT_SIZE_KEY, value);
 		this.readPreviousRecords(value);
 		this.#triggerSizeChange(value);

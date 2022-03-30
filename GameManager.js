@@ -29,9 +29,9 @@ class GameManager {
 	#gameOver;
 
 	constructor() {
-        this.resetGame();
 		this.#scoreCounter = document.getElementById("score-counter");
 		this.#boundHandleInput = this.#handleInput.bind(this);
+        this.resetGame();
 	}
 
 	//#region GETTERS
@@ -66,6 +66,10 @@ class GameManager {
 		this.#grid.addTile();
 		this.#grid.addTile();
 	}
+	#setScore(value) {
+		this.#score = value;
+		this.#scoreCounter.textContent = this.#score;
+	}
 	addScore(value) {
 		this.#score += value;
 		this.#scoreCounter.textContent = this.#score;
@@ -77,7 +81,7 @@ class GameManager {
 	}
 	resetGame() {
 		this.#resetGrid(storage.currentSize);
-		this.#score = 0;
+		this.#setScore(0);
 		this.#gameOver = false;
 	}
 	//#endregion

@@ -69,7 +69,8 @@ The game is over when there are no valid ways for you to move the tiles.
 -   [x] Dark/light mode toggling
 -   [x] Saving statistics in local storage
 -   [x] Statistics menu
--   [ ] Hamburger-menu (prebuilt game sizes + custom)
+-   [x] Hamburger-menu select prebuilt game sizes
+-   [ ] Hamburger-menu select custom size
 -   [ ] Swipe controls for mobile
 
 See the [open issues](https://github.com/Riki9811/2048/issues) for a full list of proposed features (and known issues).
