@@ -519,3 +519,17 @@ nav#menu.show {
     align-items: center;
     justify-content: center;
 }
+
+#menu-btn > svg > rect {
+    transition: transform 250ms ease-in-out, width 250ms ease-in-out;
+}
+
+#menu-btn.to-cross > svg >.menu-bar-1,
+#menu-btn.to-cross > svg >.menu-bar-3 {
+    transform: rotate(45deg);
+}
+
+#menu-btn.to-cross > svg >.menu-bar-2 {
+    transform: rotate(-45deg) translateX(-4px);
+    width: 33px;
+}

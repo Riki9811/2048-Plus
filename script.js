@@ -87,9 +87,14 @@ statsBtn.addEventListener("click", () => statsModal.show());
 // Function to toggle the side menu
 function toggleMenu() {
     menu.classList.toggle("show");
-    // if menu has class show then disable input
-    if (menu.classList.contains("show")) manager.stopInput();
-    else manager.setupInput();
+    // If menu has class show then disable input and add "to-cross" class to menu button
+    if (menu.classList.contains("show")) {
+        manager.stopInput();
+        menuBtn.classList.add("to-cross");
+    } else {
+        manager.setupInput();
+        menuBtn.classList.remove("to-cross");
+    }
 }
 // Set sizeButton with dataSet to size as disabled, all other as enabled
 function updateSizeButtons(size) {
