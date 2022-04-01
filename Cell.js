@@ -47,11 +47,16 @@ export default class Cell {
 		return this.tile == null || (this.mergeTile == null && this.tile.value === tile.value);
 	}
 
+    /**
+     * Merges the tiles into 1 with double amount (also adds to the score)
+     * @returns Whether the merge was successful
+     */
 	doMerge() {
-		if (this.tile == null || this.mergeTile == null) return;
+		if (this.tile == null || this.mergeTile == null) return false;
 		this.tile.value = this.tile.value + this.mergeTile.value;
 		Singleton.instance().addScore(this.tile.value);
 		this.mergeTile.remove();
-		this.mergeTile = null;
+        this.mergeTile = null;
+        return true;
 	}
 }

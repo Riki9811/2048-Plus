@@ -100,7 +100,9 @@ footer {
 main {
 	display: flex;
 	align-items: center;
+	flex-direction: column;
 	justify-content: center;
+	position: relative;
 }
 
 button {
@@ -187,8 +189,9 @@ button:focus-visible {
 	cursor: pointer;
 }
 
-#menu-btn {
-	z-index: 100;
+#reset-btn.reset-btn-spin > svg {
+	transform: rotate(360deg);
+	transition: transform 350ms ease-in-out;
 }
 
 #theme-btn {
@@ -446,7 +449,6 @@ body:not(.darkmode) #share-btn {
 /* SIDE MENU */
 
 nav#menu {
-	user-select: none;
 	height: 100%;
 	width: 100vw;
 	position: fixed;
@@ -486,7 +488,7 @@ nav#menu.show {
 	font-weight: bolder;
 	font-size: 3em;
 	cursor: pointer;
-	transition: color 250ms ease-in-out;
+	transition: color 250ms ease-in-out, background-color 250ms ease-in-out;
 }
 
 .size-btn:hover {
@@ -494,12 +496,12 @@ nav#menu.show {
 }
 
 .size-btn:disabled {
-    cursor: not-allowed;
+	cursor: not-allowed;
 	color: var(--tile-text-light);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 #size-btns-container {
@@ -510,26 +512,32 @@ nav#menu.show {
 	gap: 2vmin;
 	width: 60vmin;
 	height: 60vmin;
-    background: var(--bg-game-board);
+	background: var(--bg-game-board);
 }
 
 #size-btns-aligner {
 	display: flex;
-    flex-grow: 1;
-    align-items: center;
-    justify-content: center;
+	flex-direction: column;
+	flex-grow: 1;
+	align-items: center;
+	justify-content: center;
 }
 
 #menu-btn > svg > rect {
-    transition: transform 250ms ease-in-out, width 250ms ease-in-out;
+	transition: transform 500ms ease-in-out, width 500ms ease-in-out;
 }
 
-#menu-btn.to-cross > svg >.menu-bar-1,
-#menu-btn.to-cross > svg >.menu-bar-3 {
-    transform: rotate(45deg);
+#menu-btn.to-cross > svg > .menu-bar-1,
+#menu-btn.to-cross > svg > .menu-bar-3 {
+	transform: rotate(45deg);
 }
 
-#menu-btn.to-cross > svg >.menu-bar-2 {
-    transform: rotate(-45deg) translateX(-4px);
-    width: 33px;
+#menu-btn.to-cross > svg > .menu-bar-2 {
+	transform: rotate(-45deg) translateX(-4px);
+	width: 33px;
+}
+
+#menu .size-change-warning {
+	padding: 2em;
+	color: var(--text-darker);
 }

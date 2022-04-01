@@ -2,13 +2,15 @@ const DEFAULT_SIZE = { w: 4, h: 4 };
 const CURRENT_SIZE_KEY = "currentSize";
 const DARK_MODE_KEY = "darkMode";
 const STATS_KEY = "stats";
+const IS_FIRST_TIME = "isFirstTime";
 
 export default class StorageManager {
 	#sizeChangeCallbacks;
 	#darkModeChangeCallbacks;
 	#statsChangeCallbacks;
 	#previusBestScore;
-	#previousBiggestTile;
+    #previousBiggestTile;
+    #isFirstTime = false;
 
 	/**
 	 * Creates an istance of StorageManager. If there currentSize and stats
@@ -17,7 +19,15 @@ export default class StorageManager {
 	constructor() {
 		this.#sizeChangeCallbacks = [];
 		this.#darkModeChangeCallbacks = [];
-		this.#statsChangeCallbacks = [];
+        this.#statsChangeCallbacks = [];
+        
+        // Se è la prima volta che si apre il gioco
+        if (!this.#hasKey(IS_FIRST_TIME) || localStorage.getItem(IS_FIRST_TIME) === 'true') {
+            // Imposta a false la preferenza per la prima volta
+            localStorage.setItem(IS_FIRST_TIME, 'false');
+            // Ricorda che devi mostrare le info
+			this.#isFirstTime = true;
+		}
 
 		if (localStorage.getItem(CURRENT_SIZE_KEY) == null) {
 			this.currentSize = DEFAULT_SIZE;
@@ -150,6 +160,12 @@ export default class StorageManager {
 	}
 	//#endregion
 
+    //#region FIRST TIME PLAYING
+    get isFirstTime() {
+        return this.#isFirstTime;
+    }
+    //#endregion
+
 	//#region LOCALSTORAGE KEY PRESENCE
 	/**
 	 * Checks if a key is present in localStorage
@@ -157,7 +173,7 @@ export default class StorageManager {
 	 * @returns Boolean
 	 */
 	#hasKey(key) {
-		return localStorage.getItem(key) === null;
+		return localStorage.getItem(key) !== null;
 	}
 	/**
 	 * Checks if there is a preference for darkMode in local storage

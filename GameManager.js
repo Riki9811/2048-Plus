@@ -26,7 +26,6 @@ class GameManager {
 	#grid;
 	#boundHandleInput;
 	#resizeWidnowTimeout;
-	#gameOver;
 
 	constructor() {
 		this.#scoreCounter = document.getElementById("score-counter");
@@ -40,17 +39,6 @@ class GameManager {
 	}
 	get biggestTileValue() {
 		return this.#grid.biggestTileValue;
-	}
-	//#endregion
-
-	//#region SETTERS
-	/**
-	 * Sets the gameOver state
-	 * @param {boolean} value
-	 */
-	set gameOver(value) {
-		if (value) this.#endGame();
-		this.#gameOver = value;
 	}
 	//#endregion
 
@@ -74,15 +62,16 @@ class GameManager {
 		this.#score += value;
 		this.#scoreCounter.textContent = this.#score;
 	}
-	#endGame() {
+	endGame() {
 		storage.registerStats(this.score, this.#grid.biggestTileValue);
-		statsModal.show();
-		storage.readPreviousRecords();
+        statsModal.show();
+        storage.readPreviousRecords();
 	}
-	resetGame() {
+    resetGame() {
+        storage.readPreviousRecords();
 		this.#resetGrid(storage.currentSize);
 		this.#setScore(0);
-		this.#gameOver = false;
+        this.setupInput();
 	}
 	//#endregion
 
@@ -90,10 +79,10 @@ class GameManager {
 	setupInput() {
 		window.addEventListener("keydown", this.#boundHandleInput, { once: true });
 	}
-	stopInput() {
+    stopInput() {
 		window.removeEventListener("keydown", this.#boundHandleInput);
 	}
-	async #handleInput(e) {
+    async #handleInput(e) {
 		switch (e.key) {
 			case "ArrowUp":
 				if (!this.#grid.canMoveUp()) {

@@ -9,13 +9,14 @@ export default class Grid {
 	#w;
 	#h;
 	#biggestTile;
+	#gameOverScreen;
 
 	constructor(gridElemet, w, h, { cellSize = 70 / Math.max(w, h), cellGap } = {}) {
 		this.#w = w;
 		this.#h = h;
 		this.#gridElement = gridElemet;
-        this.#biggestTile = -1;
-        
+		this.#biggestTile = -1;
+
 		gridElemet.innerHTML = "";
 		gridElemet.style.setProperty("--grid-w", this.#w);
 		gridElemet.style.setProperty("--grid-h", this.#h);
@@ -27,10 +28,10 @@ export default class Grid {
 		this.boundSetTileTransitions = this.#setTileTransitions.bind(this);
 	}
 
+	//#region CELLS GETTERS
 	get cells() {
 		return this.#cells;
 	}
-
 	get cellsByColumns() {
 		return this.#cells.reduce((cellGrid, cell) => {
 			cellGrid[cell.x] = cellGrid[cell.x] || [];
@@ -38,7 +39,6 @@ export default class Grid {
 			return cellGrid;
 		}, []);
 	}
-
 	get cellsByRows() {
 		return this.#cells.reduce((cellGrid, cell) => {
 			cellGrid[cell.y] = cellGrid[cell.y] || [];
@@ -46,46 +46,43 @@ export default class Grid {
 			return cellGrid;
 		}, []);
 	}
-
 	get #emptyCells() {
 		return this.#cells.filter((cell) => cell.tile === null || cell.tile === undefined);
 	}
+	randomEmptyCell() {
+		const randIndex = Math.floor(Math.random() * this.#emptyCells.length);
+		return this.#emptyCells[randIndex];
+	}
+	//#endregion
 
+	//#region BIGGEST TILE
 	get biggestTileValue() {
 		return this.#biggestTile;
 	}
-
 	checkBiggestTileValue(value) {
 		if (this.#biggestTile < value) {
 			this.#biggestTile = value;
 		}
 	}
+	//#endregion
 
-	randomEmptyCell() {
-		const randIndex = Math.floor(Math.random() * this.#emptyCells.length);
-		return this.#emptyCells[randIndex];
-	}
-
+	//#region MOVE METHODS
 	async moveUp(addTile = true) {
 		await this.#slideTiles(this.cellsByColumns);
 		this.#finalizeMove(addTile);
 	}
-
 	async moveDown(addTile = true) {
 		await this.#slideTiles(this.cellsByColumns.map((column) => [...column].reverse()));
 		this.#finalizeMove(addTile);
 	}
-
 	async moveLeft(addTile = true) {
 		await this.#slideTiles(this.cellsByRows);
 		this.#finalizeMove(addTile);
 	}
-
 	async moveRight(addTile = true) {
 		await this.#slideTiles(this.cellsByRows.map((row) => [...row].reverse()));
 		this.#finalizeMove(addTile);
 	}
-
 	async #slideTiles(cells) {
 		return Promise.all(
 			cells.flatMap((group) => {
@@ -110,23 +107,39 @@ export default class Grid {
 			})
 		);
 	}
+	#finalizeMove(addTile) {
+		this.#cells.forEach((cell) => {
+			if (cell.doMerge()) this.checkBiggestTileValue(cell.tile.value);
+		});
 
+		if (addTile) {
+			const newTile = this.addTile();
+
+			if (!this.canMoveUp() && !this.canMoveDown() && !this.canMoveLeft() && !this.canMoveRight()) {
+				newTile.waitForTransition().then(() => {
+					Singleton.instance().endGame();
+				});
+				return;
+			}
+		}
+
+		storage.registerStats(Singleton.instance().score, this.#biggestTile);
+	}
+	//#endregion
+
+	//#region CHECK MOVE POSSIBILITY
 	canMoveUp() {
 		return this.#canMove(this.cellsByColumns);
 	}
-
 	canMoveDown() {
 		return this.#canMove(this.cellsByColumns.map((column) => [...column].reverse()));
 	}
-
 	canMoveLeft() {
 		return this.#canMove(this.cellsByRows);
 	}
-
 	canMoveRight() {
 		return this.#canMove(this.cellsByRows.map((row) => [...row].reverse()));
 	}
-
 	#canMove(cells) {
 		return cells.some((group) => {
 			return group.some((cell, index) => {
@@ -136,14 +149,15 @@ export default class Grid {
 			});
 		});
 	}
+	//#endregion
 
+	//#region MODIFY TILES
 	addTile(val) {
 		const newTile = new Tile(this.#gridElement, val);
 		this.randomEmptyCell().tile = newTile;
 		this.checkBiggestTileValue(newTile.value);
 		return newTile;
 	}
-
 	addTileInPosition(x, y, val) {
 		const index = y * this.#w + x;
 		if (this.#cells[index].tile == null) {
@@ -154,32 +168,13 @@ export default class Grid {
 		}
 		return undefined;
 	}
-
-	#finalizeMove(addTile) {
-		this.#cells.forEach((cell) => cell.doMerge());
-		this.#cells.forEach((cell) => {
-			if (cell.tile != null) this.checkBiggestTileValue(cell.tile.value);
-		});
-
-		if (addTile) {
-			const newTile = this.addTile();
-
-			if (!this.canMoveUp() && !this.canMoveDown() && !this.canMoveLeft() && !this.canMoveRight()) {
-				newTile.waitForTransition().then(() => alert("You lose"));
-				Singleton.instance().gameOver = true;
-				return;
-			}
-		}
-
-		storage.registerStats(Singleton.instance().score, this.#biggestTile);
-	}
-
 	#setTileTransitions(on = true) {
 		for (const cell of this.cells) {
 			if (!cell.tile) continue;
 			cell.tile.setTransition(on);
 		}
 	}
+	//#endregion
 }
 
 function createCellElements(gridElement, w, h) {

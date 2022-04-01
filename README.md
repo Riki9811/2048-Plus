@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Riki9811/2048">
-    <img src="images/logo.svg" alt="Logo" height="150">
+    <img src="logos/logo.svg" alt="Logo" height="150">
   </a>
 
 <h3 align="center">2048</h3>
@@ -87,4 +87,4 @@ Project Link: [https://github.com/Riki9811/2048](https://github.com/Riki9811/204
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: logos/screenshot.png

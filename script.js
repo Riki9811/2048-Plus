@@ -1,5 +1,6 @@
 import Singleton from "./GameManager.js";
 import Modal, { disableButtons, enableButtons, setupInfoModal, setupStatsModal } from "./Modal.js";
+import { waitForAnimation } from "./utils/animation.js";
 import StorageManager from "./utils/localStorageManager.js";
 
 //#region MANAGERS
@@ -15,6 +16,7 @@ const menu = document.getElementById("menu");
 
 const infoBtn = document.getElementById("info-btn");
 const statsBtn = document.getElementById("stats-btn");
+const resetBtn = document.getElementById("reset-btn");
 const menuBtn = document.getElementById("menu-btn");
 const themeBtn = document.getElementById("theme-btn");
 const sizeBtns = [...document.getElementsByClassName("size-btn")];
@@ -66,6 +68,8 @@ const infoModal = new Modal(document.querySelector("[data-info-modal-template]")
 	},
 });
 infoBtn.addEventListener("click", () => infoModal.show());
+// Se è la prima volta che gioca mostra la modale di info
+if (storage.isFirstTime) infoModal.show();
 //#endregion
 
 //#region STATS MODAL
@@ -84,35 +88,68 @@ statsBtn.addEventListener("click", () => statsModal.show());
 //#endregion
 
 //#region MENU
+// Disable all buttons by default (this is because the menu is not visible by default)
+disableButtons(sizeBtns);
 // Function to toggle the side menu
 function toggleMenu() {
-    menu.classList.toggle("show");
-    // If menu has class show then disable input and add "to-cross" class to menu button
-    if (menu.classList.contains("show")) {
-        manager.stopInput();
+	menu.classList.toggle("show");
+
+	const onMenuOpen = () => {
+		manager.stopInput();
         menuBtn.classList.add("to-cross");
+        menuBtn.style.zIndex = "100";
+		updateSizeButtons(storage.currentSize);
+		disableButtons([infoBtn, statsBtn, themeBtn]);
+	};
+
+	const onMenuClose = () => {
+        menuBtn.style.zIndex = null;
+		manager.setupInput();
+		enableButtons([infoBtn, statsBtn, themeBtn]);
+	};
+
+	if (menu.classList.contains("show")) {
+		onMenuOpen();
     } else {
-        manager.setupInput();
-        menuBtn.classList.remove("to-cross");
-    }
+		menuBtn.classList.remove("to-cross");
+		disableButtons(sizeBtns);
+		waitForAnimation(menu, false).then(onMenuClose);
+	}
 }
 // Set sizeButton with dataSet to size as disabled, all other as enabled
 function updateSizeButtons(size) {
-    sizeBtns.forEach((btn) => {
-        const sizeInt = parseInt(btn.dataset.size);
-        btn.disabled = sizeInt === size.w && sizeInt === size.h;
-    })
-};
-// Sets the bame size based on button dataSet and toggles the menu off
+	sizeBtns.forEach((btn) => {
+		const sizeInt = parseInt(btn.dataset.size);
+		if (sizeInt === size.w && sizeInt === size.h) {
+			btn.disabled = true;
+		} else if (btn.dataset.size === "Custom" && size.w !== size.h) {
+			btn.disabled = true;
+		} else {
+			btn.disabled = false;
+		}
+	});
+}
+// Sets the bame size based on button dataSet
 function setGameSize(button) {
 	const size = button.dataset.size || "4";
 	const sizeInt = parseInt(size);
 	// If size is not "custom" set else say not implemented
 	if (!isNaN(sizeInt)) storage.currentSize = { w: sizeInt, h: sizeInt };
-    else alert("Not yet implemented");
-    // Toggle menu off
-	// toggleMenu();
+	else alert("Not yet implemented");
 }
 menuBtn.addEventListener("click", toggleMenu);
 sizeBtns.forEach((btn) => btn.addEventListener("click", () => setGameSize(btn)));
+//#endregion
+
+//#region RESET
+resetBtn.addEventListener("click", resetGame, { once: true });
+// Call reset game function (animates btn also)
+function resetGame() {
+	resetBtn.classList.add("reset-btn-spin");
+	manager.resetGame();
+	waitForAnimation(resetBtn).then(() => {
+		resetBtn.classList.remove("reset-btn-spin");
+		resetBtn.addEventListener("click", resetGame, { once: true });
+	});
+}
 //#endregion
