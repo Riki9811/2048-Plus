@@ -51,10 +51,10 @@ export default class Cell {
      * Merges the tiles into 1 with double amount (also adds to the score)
      * @returns Whether the merge was successful
      */
-	doMerge() {
+	doMerge(addScore = true) {
 		if (this.tile == null || this.mergeTile == null) return false;
 		this.tile.value = this.tile.value + this.mergeTile.value;
-		Singleton.instance().addScore(this.tile.value);
+		if (addScore) Singleton.instance().addScore(this.tile.value);
 		this.mergeTile.remove();
         this.mergeTile = null;
         return true;

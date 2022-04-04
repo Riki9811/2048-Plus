@@ -109,7 +109,7 @@ export default class Grid {
 	}
 	#finalizeMove(addTile) {
 		this.#cells.forEach((cell) => {
-			if (cell.doMerge()) this.checkBiggestTileValue(cell.tile.value);
+			if (cell.doMerge(addTile)) this.checkBiggestTileValue(cell.tile.value);
 		});
 
 		if (addTile) {

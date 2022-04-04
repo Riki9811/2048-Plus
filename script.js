@@ -1,5 +1,5 @@
 import Singleton from "./GameManager.js";
-import Modal, { disableButtons, enableButtons, setupInfoModal, setupStatsModal } from "./Modal.js";
+import Modal, { disableButtons, enableButtons, setupCustomSizeModal, setupInfoModal, setupStatsModal } from "./Modal.js";
 import { waitForAnimation } from "./utils/animation.js";
 import StorageManager from "./utils/localStorageManager.js";
 
@@ -87,6 +87,21 @@ export const statsModal = new Modal(document.querySelector("[data-stats-modal-te
 statsBtn.addEventListener("click", () => statsModal.show());
 //#endregion
 
+//#region CUSTOM SIZE MODAL
+const customSizeModal = new Modal(document.querySelector("[data-custom-size-modal-template]"), {
+	onOpen: (modal) => {
+		disableButtons([infoBtn, statsBtn, menuBtn, themeBtn]);
+		manager.stopInput();
+		setupCustomSizeModal(modal, closeSizeModal);
+	},
+	onClose: () => {
+		enableButtons([infoBtn, statsBtn, menuBtn, themeBtn]);
+		manager.setupInput();
+	},
+});
+const closeSizeModal = () => customSizeModal.hide();
+//#endregion
+
 //#region MENU
 // Disable all buttons by default (this is because the menu is not visible by default)
 disableButtons(sizeBtns);
@@ -96,21 +111,21 @@ function toggleMenu() {
 
 	const onMenuOpen = () => {
 		manager.stopInput();
-        menuBtn.classList.add("to-cross");
-        menuBtn.style.zIndex = "100";
+		menuBtn.classList.add("to-cross");
+		menuBtn.style.zIndex = "100";
 		updateSizeButtons(storage.currentSize);
 		disableButtons([infoBtn, statsBtn, themeBtn]);
 	};
 
 	const onMenuClose = () => {
-        menuBtn.style.zIndex = null;
+		menuBtn.style.zIndex = null;
 		manager.setupInput();
 		enableButtons([infoBtn, statsBtn, themeBtn]);
 	};
 
 	if (menu.classList.contains("show")) {
 		onMenuOpen();
-    } else {
+	} else {
 		menuBtn.classList.remove("to-cross");
 		disableButtons(sizeBtns);
 		waitForAnimation(menu, false).then(onMenuClose);
@@ -118,24 +133,32 @@ function toggleMenu() {
 }
 // Set sizeButton with dataSet to size as disabled, all other as enabled
 function updateSizeButtons(size) {
-	sizeBtns.forEach((btn) => {
-		const sizeInt = parseInt(btn.dataset.size);
+    sizeBtns.forEach((btn) => {
+        const sizeInt = parseInt(btn.dataset.size);
+        btn.disabled = false;
+
 		if (sizeInt === size.w && sizeInt === size.h) {
-			btn.disabled = true;
+			btn.classList.add("selected");
 		} else if (btn.dataset.size === "Custom" && size.w !== size.h) {
-			btn.disabled = true;
+			btn.classList.add("selected");
 		} else {
-			btn.disabled = false;
+			btn.classList.remove("selected");
 		}
 	});
 }
 // Sets the bame size based on button dataSet
 function setGameSize(button) {
-	const size = button.dataset.size || "4";
+    // If button has class selected and doues not have "Custom" as size data don't do anything
+    if (button.classList.contains("selected") && button.dataset.size !== "Custom") return;
+    
+    const size = button.dataset.size || "4";
 	const sizeInt = parseInt(size);
-	// If size is not "custom" set else say not implemented
+	// If size is not "custom" set else close menu and ask custom size with modal
 	if (!isNaN(sizeInt)) storage.currentSize = { w: sizeInt, h: sizeInt };
-	else alert("Not yet implemented");
+    else {
+        toggleMenu();
+        customSizeModal.show();
+	}
 }
 menuBtn.addEventListener("click", toggleMenu);
 sizeBtns.forEach((btn) => btn.addEventListener("click", () => setGameSize(btn)));

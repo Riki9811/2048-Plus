@@ -183,8 +183,8 @@ button:focus-visible {
 
 .icon-btn {
 	border: none;
-	height: 80%;
-	aspect-ratio: 1;
+	height: 3em;
+	width: 3em;
 	fill: var(--text);
 	cursor: pointer;
 }
@@ -248,6 +248,8 @@ button:focus-visible {
 	font-size: 1.2rem;
 	max-width: 90vmin;
 	min-width: 40vmin;
+	max-height: 90vh;
+	overflow-y: auto;
 	transform: scale(0);
 	transition: transform 250ms ease-in-out;
 }
@@ -282,12 +284,12 @@ button:focus-visible {
 	border-bottom: 2px solid var(--border-color);
 }
 
-.modal-section > p {
+.modal-section:not(:last-child) > * {
 	margin-bottom: 1em;
 }
 
 .arrow-keys {
-	width: max(25vmin, 125px);
+	width: min(25vmin, 50%);
 	stroke: var(--text-dark);
 	stroke-width: max(0.25vmin, 3px);
 	fill: none;
@@ -322,6 +324,7 @@ button:focus-visible {
 
 #example-section {
 	display: flex;
+	align-items: center;
 	justify-content: space-evenly;
 	padding-bottom: 1em;
 }
@@ -361,6 +364,7 @@ button:focus-visible {
 	position: relative;
 	flex-grow: 1;
 	width: 100%;
+    transition: background 200ms ease-in-out;
 }
 
 #share-btn:hover,
@@ -497,7 +501,10 @@ nav#menu.show {
 
 .size-btn:disabled {
 	cursor: not-allowed;
-	color: var(--tile-text-light);
+}
+
+.size-btn.selected {
+    color: var(--tile-text-light);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -506,11 +513,10 @@ nav#menu.show {
 
 #size-btns-container {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(3, 20vmin);
 	border-radius: 2vmin;
 	padding: 2vmin;
 	gap: 2vmin;
-	width: 60vmin;
 	height: 60vmin;
 	background: var(--bg-game-board);
 }
@@ -540,4 +546,66 @@ nav#menu.show {
 #menu .size-change-warning {
 	padding: 2em;
 	color: var(--text-darker);
+}
+
+@media screen and (max-width: 100vmin) {
+	.icon-btn {
+		height: 2em;
+		width: 2em;
+	}
+
+	.modal {
+		max-width: 90vw;
+	}
+}
+
+#custom-size-grid {
+	display: grid;
+	grid-template-rows: 1fr 1.5fr;
+	grid-template-columns: 1fr auto 1fr;
+	align-items: center;
+	row-gap: 0.5em;
+	column-gap: 0.3em;
+}
+
+#custom-size-grid > select {
+	border-radius: 0;
+	border: none;
+	padding: 0.2em 1.4em 0.2em 0.2em;
+	background: var(--bg-cell);
+	color: var(--text);
+	font-size: 1em;
+}
+
+#custom-size-grid > #confirm-buttons {
+	display: flex;
+	grid-column-start: span 3;
+	justify-content: flex-end;
+	column-gap: 1em;
+	margin-top: 1em;
+}
+
+#cancel-btn,
+#confirm-btn {
+	background: var(--bg-game-board);
+	color: var(--text);
+	border-radius: 0.3em;
+	border: none;
+	font-size: 1em;
+	cursor: pointer;
+	transition: background-color 250ms ease-in-out;
+	padding: 0.25em 0.8em;
+	float: right;
+}
+
+#confirm-btn {
+    background: var(--color-accent-dark);
+}
+
+#cancel-btn:hover {
+	background: var(--bg-cell);
+}
+
+#confirm-btn:hover {
+	background: var(--color-accent);
 }

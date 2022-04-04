@@ -165,3 +165,21 @@ export function disableButtons(btns) {
 export function enableButtons(btns) {
 	for (const btn of btns) btn.disabled = false;
 }
+
+export async function setupCustomSizeModal(modal, close) {
+	const widthSelect = modal.querySelector("#width-select");
+	const heightSelect = modal.querySelector("#height-select");
+	const confirmBtn = modal.querySelector("#confirm-btn");
+    const cancelBtn = modal.querySelector("#cancel-btn");
+
+	const confirm = () => {
+		const width = parseInt(widthSelect.value);
+		const height = parseInt(heightSelect.value);
+		if (width < 3 || width > 10 || height < 3 || height > 10) return;
+		storage.currentSize = { w: width, h: height };
+        close();
+	};
+
+	confirmBtn.addEventListener("click", confirm);
+	cancelBtn.addEventListener("click", close);
+}
