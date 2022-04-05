@@ -1,6 +1,6 @@
+import Singleton from "../GameManager.js";
+import { storage } from "../script.js";
 import Cell from "./Cell.js";
-import Singleton from "./GameManager.js";
-import { storage } from "./script.js";
 import Tile from "./Tile.js";
 
 export default class Grid {

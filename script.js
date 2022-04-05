@@ -1,5 +1,5 @@
 import Singleton from "./GameManager.js";
-import Modal, { disableButtons, enableButtons, setupCustomSizeModal, setupInfoModal, setupStatsModal } from "./Modal.js";
+import Modal, { disableButtons, enableButtons, setupCustomSizeModal, setupInfoModal, setupStatsModal } from "./components/Modal.js";
 import { waitForAnimation } from "./utils/animation.js";
 import StorageManager from "./utils/localStorageManager.js";
 
@@ -133,9 +133,9 @@ function toggleMenu() {
 }
 // Set sizeButton with dataSet to size as disabled, all other as enabled
 function updateSizeButtons(size) {
-    sizeBtns.forEach((btn) => {
-        const sizeInt = parseInt(btn.dataset.size);
-        btn.disabled = false;
+	sizeBtns.forEach((btn) => {
+		const sizeInt = parseInt(btn.dataset.size);
+		btn.disabled = false;
 
 		if (sizeInt === size.w && sizeInt === size.h) {
 			btn.classList.add("selected");
@@ -148,16 +148,16 @@ function updateSizeButtons(size) {
 }
 // Sets the bame size based on button dataSet
 function setGameSize(button) {
-    // If button has class selected and doues not have "Custom" as size data don't do anything
-    if (button.classList.contains("selected") && button.dataset.size !== "Custom") return;
-    
-    const size = button.dataset.size || "4";
+	// If button has class selected and doues not have "Custom" as size data don't do anything
+	if (button.classList.contains("selected") && button.dataset.size !== "Custom") return;
+
+	const size = button.dataset.size || "4";
 	const sizeInt = parseInt(size);
 	// If size is not "custom" set else close menu and ask custom size with modal
 	if (!isNaN(sizeInt)) storage.currentSize = { w: sizeInt, h: sizeInt };
-    else {
-        toggleMenu();
-        customSizeModal.show();
+	else {
+		toggleMenu();
+		customSizeModal.show();
 	}
 }
 menuBtn.addEventListener("click", toggleMenu);

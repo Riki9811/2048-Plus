@@ -1,4 +1,4 @@
-import { waitForAnimation } from "./utils/animation.js";
+import { waitForAnimation } from "../utils/animation.js";
 
 export default class Tile {
 	#tileElement;

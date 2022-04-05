@@ -364,7 +364,7 @@ button:focus-visible {
 	position: relative;
 	flex-grow: 1;
 	width: 100%;
-    transition: background 200ms ease-in-out;
+	transition: background 200ms ease-in-out;
 }
 
 #share-btn:hover,
@@ -504,7 +504,7 @@ nav#menu.show {
 }
 
 .size-btn.selected {
-    color: var(--tile-text-light);
+	color: var(--tile-text-light);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -599,7 +599,7 @@ nav#menu.show {
 }
 
 #confirm-btn {
-    background: var(--color-accent-dark);
+	background: var(--color-accent-dark);
 }
 
 #cancel-btn:hover {

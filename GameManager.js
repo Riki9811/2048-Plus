@@ -1,4 +1,4 @@
-import Grid from "./Grid.js";
+import Grid from "./components/Grid.js";
 import { statsModal, storage } from "./script.js";
 
 var Singleton = (function () {
@@ -30,7 +30,7 @@ class GameManager {
 	constructor() {
 		this.#scoreCounter = document.getElementById("score-counter");
 		this.#boundHandleInput = this.#handleInput.bind(this);
-        this.resetGame();
+		this.resetGame();
 	}
 
 	//#region GETTERS
@@ -64,14 +64,14 @@ class GameManager {
 	}
 	endGame() {
 		storage.registerStats(this.score, this.#grid.biggestTileValue);
-        statsModal.show();
-        storage.readPreviousRecords();
+		statsModal.show();
+		storage.readPreviousRecords();
 	}
-    resetGame() {
-        storage.readPreviousRecords();
+	resetGame() {
+		storage.readPreviousRecords();
 		this.#resetGrid(storage.currentSize);
 		this.#setScore(0);
-        this.setupInput();
+		this.setupInput();
 	}
 	//#endregion
 
@@ -79,10 +79,10 @@ class GameManager {
 	setupInput() {
 		window.addEventListener("keydown", this.#boundHandleInput, { once: true });
 	}
-    stopInput() {
+	stopInput() {
 		window.removeEventListener("keydown", this.#boundHandleInput);
 	}
-    async #handleInput(e) {
+	async #handleInput(e) {
 		switch (e.key) {
 			case "ArrowUp":
 				if (!this.#grid.canMoveUp()) {

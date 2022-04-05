@@ -9,8 +9,8 @@ export default class StorageManager {
 	#darkModeChangeCallbacks;
 	#statsChangeCallbacks;
 	#previusBestScore;
-    #previousBiggestTile;
-    #isFirstTime = false;
+	#previousBiggestTile;
+	#isFirstTime = false;
 
 	/**
 	 * Creates an istance of StorageManager. If there currentSize and stats
@@ -19,13 +19,13 @@ export default class StorageManager {
 	constructor() {
 		this.#sizeChangeCallbacks = [];
 		this.#darkModeChangeCallbacks = [];
-        this.#statsChangeCallbacks = [];
-        
-        // Se è la prima volta che si apre il gioco
-        if (!this.#hasKey(IS_FIRST_TIME) || localStorage.getItem(IS_FIRST_TIME) === 'true') {
-            // Imposta a false la preferenza per la prima volta
-            localStorage.setItem(IS_FIRST_TIME, 'false');
-            // Ricorda che devi mostrare le info
+		this.#statsChangeCallbacks = [];
+
+		// Se è la prima volta che si apre il gioco
+		if (!this.#hasKey(IS_FIRST_TIME) || localStorage.getItem(IS_FIRST_TIME) === "true") {
+			// Imposta a false la preferenza per la prima volta
+			localStorage.setItem(IS_FIRST_TIME, "false");
+			// Ricorda che devi mostrare le info
 			this.#isFirstTime = true;
 		}
 
@@ -82,9 +82,9 @@ export default class StorageManager {
 	/**
 	 * Saves the value as currentSize in localStorage.
 	 */
-    set currentSize(value) {
-        if (!value.w) value.w = 4;
-        if (!value.h) value.h = 4;
+	set currentSize(value) {
+		if (!value.w) value.w = 4;
+		if (!value.h) value.h = 4;
 		this.#saveValue(CURRENT_SIZE_KEY, value);
 		this.readPreviousRecords(value);
 		this.#triggerSizeChange(value);
@@ -160,11 +160,11 @@ export default class StorageManager {
 	}
 	//#endregion
 
-    //#region FIRST TIME PLAYING
-    get isFirstTime() {
-        return this.#isFirstTime;
-    }
-    //#endregion
+	//#region FIRST TIME PLAYING
+	get isFirstTime() {
+		return this.#isFirstTime;
+	}
+	//#endregion
 
 	//#region LOCALSTORAGE KEY PRESENCE
 	/**
