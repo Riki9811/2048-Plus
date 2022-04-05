@@ -1,4 +1,5 @@
 import Grid from "./components/Grid.js";
+import ScoreIncreaseAnimation from "./components/ScoreAnimator.js";
 import { statsModal, storage } from "./script.js";
 
 var Singleton = (function () {
@@ -25,9 +26,9 @@ class GameManager {
 	#score;
 	#grid;
 	#boundHandleInput;
-	#resizeWidnowTimeout;
+    #resizeWidnowTimeout;
 
-	constructor() {
+    constructor() {
 		this.#scoreCounter = document.getElementById("score-counter");
 		this.#boundHandleInput = this.#handleInput.bind(this);
 		this.resetGame();
@@ -60,7 +61,8 @@ class GameManager {
 	}
 	addScore(value) {
 		this.#score += value;
-		this.#scoreCounter.textContent = this.#score;
+        this.#scoreCounter.textContent = this.#score;
+        new ScoreIncreaseAnimation(value, this.#scoreCounter);
 	}
 	endGame() {
 		storage.registerStats(this.score, this.#grid.biggestTileValue);
