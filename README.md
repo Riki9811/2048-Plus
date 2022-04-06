@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Riki9811/2048">
-    <img src="logos/logo.svg" alt="Logo" height="150">
+    <img src="logos/logo (.git).svg" alt="Logo" height="150">
   </a>
 
 <h3 align="center">2048</h3>
