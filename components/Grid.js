@@ -1,5 +1,6 @@
 import Singleton from "../GameManager.js";
 import { storage } from "../script.js";
+import wait from "../utils/wait.js";
 import Cell from "./Cell.js";
 import Tile from "./Tile.js";
 
@@ -9,7 +10,6 @@ export default class Grid {
 	#w;
 	#h;
 	#biggestTile;
-	#gameOverScreen;
 
 	constructor(gridElemet, w, h, { cellSize = 70 / Math.max(w, h), cellGap } = {}) {
 		this.#w = w;
@@ -175,6 +175,20 @@ export default class Grid {
 		}
 	}
 	//#endregion
+
+	async popAnimation() {
+		const promises = [];
+		for (let y = 0; y < this.#h; y++) {
+			for (let x = 0; x < this.#w; x++) {
+				const cell = this.#cells[y * this.#w + x];
+				if (cell.tile) {
+					const delayOrder = x + y;
+					promises.push(cell.tile.pop(delayOrder));
+				}
+			}
+		}
+		return Promise.all(promises);
+	}
 }
 
 function createCellElements(gridElement, w, h) {

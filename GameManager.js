@@ -71,10 +71,13 @@ class GameManager {
 		this.#scoreCounter.textContent = this.#score;
 		new ScoreIncreaseAnimation(value, this.#scoreCounter);
 	}
-	endGame() {
-		storage.registerStats(this.score, this.#grid.biggestTileValue);
-		statsModal.show();
-		storage.readPreviousRecords();
+    endGame() {
+        this.stopInput();
+        storage.registerStats(this.score, this.#grid.biggestTileValue);
+        this.#grid.popAnimation().then(() => {
+            statsModal.show();
+            storage.readPreviousRecords();
+        })
 	}
 	resetGame() {
 		storage.readPreviousRecords();

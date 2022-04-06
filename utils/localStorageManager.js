@@ -115,7 +115,7 @@ export default class StorageManager {
 	 * @returns {Map<string, {bestScore, biggestTile}}
 	 */
 	get stats() {
-		return this.#getValue(STATS_KEY);
+		return this.#getValue(STATS_KEY, new Map());
 	}
 	/**
 	 * Saves the value as stats in localStorage.

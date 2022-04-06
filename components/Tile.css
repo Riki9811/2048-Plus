@@ -41,13 +41,21 @@
 	font-size: calc(var(--cell-size) / 2);
 	color: var(--tile-text-light);
 	animation: show 200ms ease-in-out;
-	transition: left 100ms ease-in-out, top 100ms ease-in-out;
+	transition: left 100ms ease-in-out, top 100ms ease-in-out, transform 100ms ease-in-out;
 	overflow: unset;
 	word-break: break-all;
 }
 
 .tile::before {
 	border-radius: 1vmin;
+}
+
+.tile.pop {
+	--totalTime: 300ms;
+	--maxSize: max(var(--grid-w), var(--grid-h));
+	--delayOrder: 0;
+	transition-delay: calc(var(--totalTime) / var(--maxSize) * var(--delayOrder));
+	transform: scale(calc(1 + var(--maxSize) / 100 * 2));
 }
 
 @keyframes show {

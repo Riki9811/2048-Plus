@@ -1,4 +1,5 @@
 import { waitForAnimation } from "../utils/animation.js";
+import wait from "../utils/wait.js";
 
 export default class Tile {
 	#tileElement;
@@ -49,5 +50,14 @@ export default class Tile {
 
 	setTransition(on = true) {
 		this.#tileElement.style.transition = on ? null : "none";
-	}
+    }
+    
+    async pop(delayOrder = 0) {
+        this.#tileElement.style.setProperty("--delayOrder", `${delayOrder}`);
+        this.#tileElement.classList.add("pop");
+        await waitForAnimation(this.#tileElement);
+        this.#tileElement.classList.remove("pop");
+        await waitForAnimation(this.#tileElement);
+        return;
+    }
 }
