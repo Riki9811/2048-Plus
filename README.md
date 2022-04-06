@@ -72,7 +72,8 @@ The game is over when there are no valid ways for you to move the tiles.
 -   [x] Hamburger-menu select prebuilt game sizes
 -   [x] Hamburger-menu select custom size
 -   [x] Score increase animation
--   [ ] Swipe controls for mobile
+-   [x] Swipe controls for mobile
+-   [ ] Lose animation
 
 See the [open issues](https://github.com/Riki9811/2048/issues) for a full list of proposed features (and known issues).
 

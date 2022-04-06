@@ -103,6 +103,7 @@ main {
 	flex-direction: column;
 	justify-content: center;
 	position: relative;
+    flex-grow: 1;
 }
 
 button {
@@ -495,8 +496,6 @@ body:not(.darkmode) #share-btn {
 	padding-inline: 3em;
 }
 
-/* SIDE MENU */
-
 nav#menu {
 	height: 100%;
 	width: 100vw;
@@ -600,7 +599,9 @@ nav#menu.show {
 	}
 
 	.modal {
+		max-height: 80vh;
 		max-width: 90vw;
+        font-size: 1.5em;
 	}
 }
 

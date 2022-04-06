@@ -1,6 +1,10 @@
 import Grid from "./components/Grid.js";
 import ScoreIncreaseAnimation from "./components/ScoreAnimator.js";
+import InputHandler from "./InputHandler.js";
 import { statsModal, storage } from "./script.js";
+
+const THRESHOLD_DISTANCE = 75;
+const ALLOWED_GESTURE_TIME = 500;
 
 var Singleton = (function () {
 	var instance;
@@ -23,14 +27,17 @@ export default Singleton;
 
 class GameManager {
 	#scoreCounter;
+	#mainElement;
 	#score;
 	#grid;
 	#boundHandleInput;
-    #resizeWidnowTimeout;
+	#resizeWidnowTimeout;
 
-    constructor() {
+	constructor() {
 		this.#scoreCounter = document.getElementById("score-counter");
+		this.#mainElement = document.body.querySelector("main");
 		this.#boundHandleInput = this.#handleInput.bind(this);
+        this.inputHandler = new InputHandler(this.#boundHandleInput, this.#mainElement)
 		this.resetGame();
 	}
 
@@ -61,8 +68,8 @@ class GameManager {
 	}
 	addScore(value) {
 		this.#score += value;
-        this.#scoreCounter.textContent = this.#score;
-        new ScoreIncreaseAnimation(value, this.#scoreCounter);
+		this.#scoreCounter.textContent = this.#score;
+		new ScoreIncreaseAnimation(value, this.#scoreCounter);
 	}
 	endGame() {
 		storage.registerStats(this.score, this.#grid.biggestTileValue);
@@ -73,19 +80,19 @@ class GameManager {
 		storage.readPreviousRecords();
 		this.#resetGrid(storage.currentSize);
 		this.#setScore(0);
-		this.setupInput();
+        this.setupInput();
 	}
 	//#endregion
 
 	//#region INPUT
-	setupInput() {
-		window.addEventListener("keydown", this.#boundHandleInput, { once: true });
-	}
-	stopInput() {
-		window.removeEventListener("keydown", this.#boundHandleInput);
-	}
-	async #handleInput(e) {
-		switch (e.key) {
+    setupInput() {
+        this.inputHandler.setupInput();
+    }
+    stopInput() {
+        this.inputHandler.stopInput();
+    }
+	async #handleInput(direction) {
+		switch (direction) {
 			case "ArrowUp":
 				if (!this.#grid.canMoveUp()) {
 					this.setupInput();
@@ -115,11 +122,8 @@ class GameManager {
 				await this.#grid.moveRight();
 				break;
 			default:
-				this.setupInput();
 				return;
 		}
-
-		this.setupInput();
 	}
 	//#endregion
 }
