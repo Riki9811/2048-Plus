@@ -15,7 +15,7 @@
     <a href="https://github.com/Riki9811/2048"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/Riki9811/2048">View Demo</a>
+    <a href="https://2048-plus.vercel.app/">View Demo</a>
     ·
     <a href="https://github.com/Riki9811/2048/issues">Report Bug</a>
     ·
