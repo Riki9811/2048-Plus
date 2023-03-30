@@ -1,39 +1,41 @@
 <div id="top"></div>
 
+<!-- SHIELDS -->
+
+[![Contributors][contributors-shield]][contributors-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/Riki9811/2048">
+<a href="https://2048-plus.vercel.app/">
     <img src="logos/logo (.git).svg" alt="Logo" height="150">
-  </a>
+</a>
 
 <h3 align="center">2048</h3>
-
-  <p align="center">
-    Clone of 2048 game
-    <br />
-    <a href="https://github.com/Riki9811/2048"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://2048-plus.vercel.app/">View Demo</a>
-    ·
-    <a href="https://github.com/Riki9811/2048/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/Riki9811/2048/issues">Request Feature</a>
-  </p>
+    <p align="center">
+        Clone of 2048 game
+        <br />
+        <a href="https://2048-plus.vercel.app/">View Demo</a>
+        ·
+        <a href="https://github.com/Riki9811/2048/issues">Report Bug</a>
+        ·
+        <a href="https://github.com/Riki9811/2048/issues">Request Feature</a>
+    </p>
 </div>
 
 <!-- TABLE OF CONTENTS -->
 <details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-    </li>
-    <li><a href="#how-to-play">How To Play</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ol>
+    <summary>Table of Contents</summary>
+    <ol>
+        <li>
+            <a href="#about-the-project">About The Project</a>
+        </li>
+        <li><a href="#how-to-play">How To Play</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ol>
 </details>
 <br />
 
@@ -41,7 +43,7 @@
 
 ## About The Project
 
-[![2048 Screen Shot][product-screenshot]](https://example.com)
+[![2048 Screen Shot][product-screenshot]](https://2048-plus.vercel.app/)
 
 This project is a clone of the original 2048 game. Written in plain Javascript. The game will have some extra features like custom game-board dimensions, saving scores and statistics in localStorage and some additional graphical settings like dark/light mode.
 
@@ -89,4 +91,12 @@ Project Link: [https://github.com/Riki9811/2048](https://github.com/Riki9811/204
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+<!-- MARKDOWN LINKS & IMAGES -->
+
+[contributors-shield]: https://img.shields.io/github/contributors/Riki9811/2048-Plus.svg?style=for-the-badge
+[contributors-url]: https://github.com/Riki9811/2048-Plus/graphs/contributors
+[stars-shield]: https://img.shields.io/github/stars/Riki9811/2048-Plus.svg?style=for-the-badge
+[stars-url]: https://github.com/Riki9811/2048-Plus/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Riki9811/2048-Plus.svg?style=for-the-badge
+[issues-url]: https://github.com/Riki9811/2048-Plus/issues
 [product-screenshot]: logos/screenshot.png
